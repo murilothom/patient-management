@@ -2,11 +2,10 @@ import styled from "styled-components";
 
 export const PatientsContainer = styled.section`
   max-width: 64.5rem;
-  max-height: 39rem;
   width: 100%;
-  height: 100vh;
   background-color: ${({ theme }) => theme.white};
   border-radius: 8px 8px 0px 0px;
+  margin-bottom: 3rem;
 `;
 
 export const PatientsHeader = styled.header`
