@@ -26,7 +26,7 @@ export class Service {
 
   public delete = async <T>(
     url: string,
-    params?: any,
+    _?: any,
     config?: AxiosRequestConfig,
   ): Promise<T | any> => this.axiosInstance().delete(url, config);
 
