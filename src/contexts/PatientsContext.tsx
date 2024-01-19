@@ -35,12 +35,11 @@ export function PatientsProvider({ children }: IPatientsProviderProps) {
 
   const fetchPatients = useCallback(async () => {
     try {
-      const patients = await patientsService
-      .get({
+      const patients = await patientsService.get({
         params: {
-          sort: params?.sort ?? 'createdAt',
-          order: params?.order ?? 'desc',
-          query: params?.query,
+          sort: params.sort,
+          order: params.order,
+          query: params.query,
         },
       })
 
@@ -50,8 +49,20 @@ export function PatientsProvider({ children }: IPatientsProviderProps) {
     }
   }, [params]);
 
-  const handleParams = useCallback((params: Params) => {
-    setParams(state => ({ ...state, params }));
+  const handleParams = useCallback((newParams: Params) => {
+    setParams(state => {
+      const order = newParams.sort === state.sort 
+        ? state.order === 'asc'
+          ? 'desc'
+          : 'asc'
+        : 'asc';
+
+      return {
+        ...state,
+        ...newParams,
+        order
+      }
+    });
   }, []);
 
   const handleDeletePatient = useCallback(async () => {
