@@ -25,7 +25,7 @@ export const Form = styled.form`
     width: 14.35375rem;
   }
 
-  input, select, option, textarea {
+  input, textarea {
     padding: 0.3125rem 0.9375rem;
     border-radius: 5px;
     border: 1px solid ${({ theme }) => theme['gray-200']};

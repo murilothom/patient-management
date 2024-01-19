@@ -1,6 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { X } from 'phosphor-react';
 import { useContextSelector } from 'use-context-selector';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 import {
   CloseButton,
   DialogContainer,
@@ -12,6 +14,8 @@ import {
 import { ModalContext } from '../../contexts/ModalContext';
 import { PatientsContext } from '../../contexts/PatientsContext';
 import { PatientBasicInfo } from './components/PatientBasicInfo';
+import { Contact } from './components/Contact';
+import { PatientSchema, patientSchema } from '../../types/PatientSchema';
 
 export enum Step {
   INFO = 1,
@@ -24,6 +28,10 @@ export function PatientModal() {
   const handleChangeStep = (nextStep: Step) => {
     setStep(nextStep);
   };
+
+  const form = useForm<PatientSchema>({
+    resolver: zodResolver(patientSchema),
+  });
 
   const {
     handleClosePatientModal,
@@ -44,6 +52,12 @@ export function PatientModal() {
     setCurrentPatient(null);
     handleClosePatientModal();
   };
+
+  useEffect(() => {
+    if (form.formState.isSubmitted) {
+      form.reset();
+    }
+  }, [form.formState.isSubmitted]);
 
   return (
     <DialogContainer open={isPatientModalOpen} onClose={onClose}>
@@ -68,8 +82,10 @@ export function PatientModal() {
               Contato
             </NavBarButton>
           </NavBar>
-          {step === Step.INFO && (<PatientBasicInfo handleChangeStep={handleChangeStep} />)}
-          {step === Step.CONTACT && (<PatientBasicInfo handleChangeStep={handleChangeStep} />)}
+          {step === Step.INFO && (
+            <PatientBasicInfo form={form} handleChangeStep={handleChangeStep} />
+          )}
+          {step === Step.CONTACT && (<Contact form={form} handleChangeStep={handleChangeStep} />)}
         </DialogPanel>
       </DialogWrapper>
     </DialogContainer>

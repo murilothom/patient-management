@@ -1,17 +1,16 @@
-import * as z from 'zod';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
 import { useContextSelector } from 'use-context-selector';
 import { useEffect, useState } from 'react';
 import DatePicker, { registerLocale } from 'react-datepicker';
 import { ptBR } from 'date-fns/locale';
 import { Calendar } from 'phosphor-react';
 import { parseISO } from 'date-fns';
+import { UseFormReturn } from 'react-hook-form';
 import { ButtonWrapper, Form, Select } from './styles';
 import userImg from '../../../../assets/image-user.png';
 import { PatientsContext } from '../../../../contexts/PatientsContext';
 import 'react-datepicker/dist/react-datepicker.css';
 import { Step } from '../..';
+import { PatientSchema } from '../../../../types/PatientSchema';
 
 registerLocale('ptBR', ptBR);
 
@@ -22,33 +21,19 @@ const genderOptions = [
 ];
 
 const maritalStatusOptions = [
-  { value: 'single', label: 'Solteiro' },
-  { value: 'married', label: 'Casado' },
-  { value: 'separate', label: 'Separado' },
-  { value: 'divorced', label: 'Divorciado' },
-  { value: 'widower', label: 'Viúvo' },
+  { value: 'single', label: 'Solteiro(a)' },
+  { value: 'married', label: 'Casado(a)' },
+  { value: 'separate', label: 'Separado(a)' },
+  { value: 'divorced', label: 'Divorciado(a)' },
+  { value: 'widower', label: 'Viúvo(a)' },
 ];
-
-const patientSchema = z.object({
-  name: z.string().trim(),
-  rg: z.string().trim(),
-  document: z.string().length(11).trim(),
-  nickname: z.string().trim(),
-  email: z.string().trim(),
-  nationality: z.string().trim(),
-  dateOfBirth: z.string(),
-  gender: z.string().trim(),
-  maritalStatus: z.string().trim(),
-  additionalObservations: z.string().optional(),
-});
-
-type PatientSchema = z.infer<typeof patientSchema>;
 
 interface Props {
   handleChangeStep: (step: Step) => void
+  form: UseFormReturn<PatientSchema>
 }
 
-export function PatientBasicInfo({ handleChangeStep }: Props) {
+export function PatientBasicInfo({ handleChangeStep, form }: Props) {
   const {
     currentPatient,
   } = useContextSelector(
@@ -61,42 +46,33 @@ export function PatientBasicInfo({ handleChangeStep }: Props) {
     currentPatient ? parseISO(currentPatient.dateOfBirth.toString()) : null,
   );
 
-  const {
-    register,
-    handleSubmit,
-    formState: { isSubmitting },
-    setValue,
-  } = useForm<PatientSchema>({
-    resolver: zodResolver(patientSchema),
-  });
-
   const onSubmit = () => {
     handleChangeStep(Step.CONTACT);
   };
 
   useEffect(() => {
     if (gender) {
-      setValue('gender', gender);
+      form.setValue('gender', gender);
     }
     if (maritalStatus) {
-      setValue('maritalStatus', maritalStatus);
+      form.setValue('maritalStatus', maritalStatus);
     }
     if (dateOfBirth) {
-      setValue('dateOfBirth', dateOfBirth.toString());
+      form.setValue('dateOfBirth', dateOfBirth.toString());
     }
   }, [gender, maritalStatus, dateOfBirth]);
 
   return (
     <div>
       <img src={userImg} alt="User" />
-      <Form onSubmit={handleSubmit(onSubmit)}>
+      <Form onSubmit={onSubmit}>
         <div>
           <label>
             Paciente:
             <input
               type="text"
               placeholder="Digite"
-              {...register('name')}
+              {...form.register('name')}
               required
               defaultValue={currentPatient?.name ?? ''}
             />
@@ -106,7 +82,7 @@ export function PatientBasicInfo({ handleChangeStep }: Props) {
             <input
               type="text"
               placeholder="Digite"
-              {...register('nickname')}
+              {...form.register('nickname')}
               required
               defaultValue={currentPatient?.nickname ?? ''}
             />
@@ -116,7 +92,7 @@ export function PatientBasicInfo({ handleChangeStep }: Props) {
             <input
               type="text"
               placeholder="Digite"
-              {...register('nationality')}
+              {...form.register('nationality')}
               required
               defaultValue={currentPatient?.nationality ?? ''}
             />
@@ -139,7 +115,7 @@ export function PatientBasicInfo({ handleChangeStep }: Props) {
             <input
               type="text"
               placeholder="Digite"
-              {...register('document')}
+              {...form.register('document')}
               required
               defaultValue={currentPatient?.document ?? ''}
             />
@@ -149,7 +125,7 @@ export function PatientBasicInfo({ handleChangeStep }: Props) {
             <input
               type="text"
               placeholder="Digite"
-              {...register('rg')}
+              {...form.register('rg')}
               required
               defaultValue={currentPatient?.rg ?? ''}
             />
@@ -177,7 +153,7 @@ export function PatientBasicInfo({ handleChangeStep }: Props) {
             <input
               type="email"
               placeholder="Digite"
-              {...register('email')}
+              {...form.register('email')}
               required
               defaultValue={currentPatient?.email ?? ''}
             />
@@ -188,13 +164,13 @@ export function PatientBasicInfo({ handleChangeStep }: Props) {
           Informações adicionais
           <textarea
             placeholder="Digite"
-            {...register('additionalObservations')}
+            {...form.register('additionalObservations')}
             defaultValue={currentPatient?.additionalObservations ?? ''}
           />
         </label>
 
         <ButtonWrapper>
-          <button type="submit" disabled={isSubmitting}>Próximo</button>
+          <button type="submit" disabled={form.formState.isSubmitting}>Próximo</button>
         </ButtonWrapper>
       </Form>
     </div>
