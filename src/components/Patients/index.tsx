@@ -6,6 +6,7 @@ import patientsService from "../../api/patientsService";
 import { Plus } from "phosphor-react";
 import { PatientsTable } from "./components/PatientsTable";
 import { toast } from "react-toastify";
+import { DeletePatientModal } from "../DeletePatientModal";
 
 export function Patients() {
   const [patients, setPatients] = useState<Patient[]>([]);
@@ -45,6 +46,8 @@ export function Patients() {
       {patients.length ? (
         <PatientsTable patients={patients} />
       ) : null}
+
+      <DeletePatientModal />
     </PatientsContainer>
   );
 }

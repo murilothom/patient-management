@@ -4,11 +4,14 @@ import { GlobalStyle } from "./styles/global"
 import { Home } from "./pages/Home"
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import { DeletePatientModalProvider } from "./contexts/DeletePatientModalContext";
 
 function App() {
   return (
     <ThemeProvider theme={defaultTheme}>
-      <Home />
+      <DeletePatientModalProvider>
+        <Home />
+      </DeletePatientModalProvider>
 
       <ToastContainer theme="colored" />
       <GlobalStyle />

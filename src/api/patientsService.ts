@@ -9,6 +9,10 @@ export class PatientsService {
   public get = async (): Promise<Patient[]> => {
     return this.service.get(baseURL).then(x => x.data);
   }
+
+  public delete = async (id: string): Promise<void> => {
+    return this.service.delete(`${baseURL}/${id}`);
+  }
 }
 
 const service = new Service();

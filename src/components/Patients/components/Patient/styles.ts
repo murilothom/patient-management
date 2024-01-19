@@ -58,5 +58,9 @@ export const ActionsButtonsWrapper = styled.div`
       color: ${({ theme }) => theme.blue};
       background-color: ${({ theme }) => theme["light-blue"]};
     }
+
+    &:focus {
+      box-shadow: none;
+    }
   }
 `;
