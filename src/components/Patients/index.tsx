@@ -5,13 +5,18 @@ import { SearchField } from "./components/SearchFIeld";
 import patientsService from "../../api/patientsService";
 import { Plus } from "phosphor-react";
 import { PatientsTable } from "./components/PatientsTable";
+import { toast } from "react-toastify";
 
 export function Patients() {
   const [patients, setPatients] = useState<Patient[]>([]);
 
   async function getPatients() {
-    const patients = await patientsService.get();
-    setPatients(patients);
+    try {
+      const patients = await patientsService.get();
+      setPatients(patients);
+    } catch (error) {
+      toast.error('Ocorreu um erro ao buscar os pacientes.');
+    }
   }
 
   useEffect(() => {
@@ -38,7 +43,7 @@ export function Patients() {
       </PatientsHeader>
 
       {patients.length ? (
-          <PatientsTable patients={patients} />
+        <PatientsTable patients={patients} />
       ) : null}
     </PatientsContainer>
   );
