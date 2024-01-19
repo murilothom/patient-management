@@ -1,3 +1,4 @@
+import { Params } from "../contexts/PatientsContext";
 import { Patient } from "../types/Patient";
 import { Service } from "./service";
 
@@ -6,8 +7,12 @@ const baseURL = "http://localhost:3000/patients";
 export class PatientsService {
   constructor(private service: Service) {}
 
-  public get = async (params: Record<string, any>): Promise<Patient[]> => {
-    return this.service.get(baseURL, { params }).then(x => x.data);
+  public get = async (params: Params): Promise<Patient[]> => {
+    return this.service.get(baseURL, { params: {
+      _sort: params.sort,
+      _order: params.order,
+      q: params.query
+    } }).then(x => x.data);
   }
 
   public delete = async (id: string): Promise<void> => {

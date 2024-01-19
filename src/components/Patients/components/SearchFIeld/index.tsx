@@ -3,24 +3,27 @@ import { SearchFieldContainer } from "./styles";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { useContextSelector } from "use-context-selector";
 import { PatientsContext } from "../../../../contexts/PatientsContext";
-import { memo } from 'react'
 import { useDebounce } from "use-debounce";
 
-
-export function SearchFormComponent() {
+export function SearchField() {
   const [query, setQuery] = useState<string>('');
-  const {
-    handleParams
-  } = useContextSelector(
+  const handleParams = useContextSelector(
     PatientsContext,
-    (context) => context,
+    (context) => context.handleParams,
   );
   const inputRef = useRef<HTMLInputElement>(null);
   const [queryValue] = useDebounce(query, 1000);
+  const [firstFetch, setFirstFetch] = useState(false);
+
+  function handleSearch(e: ChangeEvent<HTMLInputElement>) {
+    setQuery(e.target.value.trim());
+    setFirstFetch(true);
+  }
 
   useEffect(() => {
+    if (!firstFetch) { return }
     handleParams({ query: queryValue });
-  }, [handleParams, queryValue]);
+  }, [handleParams, queryValue, firstFetch]);
 
   return (
     <SearchFieldContainer onClick={() => inputRef.current?.focus()}>
@@ -32,10 +35,8 @@ export function SearchFormComponent() {
         type="text"
         placeholder="Pesquisar"
         value={query}
-        onChange={(e: ChangeEvent<HTMLInputElement>) => setQuery(e.target.value)} 
+        onChange={handleSearch} 
       />
     </SearchFieldContainer>
   )
 }
-
-export const SearchForm = memo(SearchFormComponent);

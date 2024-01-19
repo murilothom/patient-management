@@ -5,6 +5,7 @@ import { DotsThree } from "phosphor-react";
 import { ActionsButtonsWrapper, PatientInfo } from "./styles";
 import { DeletePatientModalContext } from "../../../../contexts/DeletePatientModalContext";
 import { useContextSelector } from "use-context-selector";
+import { PatientsContext } from "../../../../contexts/PatientsContext";
 
 interface Props {
   patient: Patient
@@ -13,12 +14,13 @@ interface Props {
 export function PatientDetail({ patient }: Props) {
   const [isActionsOpen, setIsActionsOpen] = useState(false);
   const actionsButtonRef = useRef<HTMLButtonElement>(null);
-  const {
-    onOpen: onOpenDeleteModal,
-    setCurrentPatient
-  } = useContextSelector(
+  const { onOpen: onOpenDeleteModal }= useContextSelector(
     DeletePatientModalContext,
     (context) => context
+  );
+  const setCurrentPatient= useContextSelector(
+    PatientsContext,
+    (context) => context.setCurrentPatient
   );
 
   useEffect(() => {

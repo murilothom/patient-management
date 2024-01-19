@@ -1,5 +1,5 @@
 import { AddPatientButton, ButtonsWrapper, PatientsContainer, PatientsHeader } from "./styles";
-import { SearchForm } from "./components/SearchFIeld";
+import { SearchField } from "./components/SearchFIeld";
 import { Plus } from "phosphor-react";
 import { PatientsTable } from "./components/PatientsTable";
 import { DeletePatientModal } from "../DeletePatientModal";
@@ -20,7 +20,7 @@ export function Patients() {
         <h1>Listagem de pacientes</h1>
 
         <ButtonsWrapper>
-          <SearchForm />
+          <SearchField />
 
           <AddPatientButton>
             <div>

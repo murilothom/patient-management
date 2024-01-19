@@ -17,7 +17,6 @@ export function PatientsTable({ patients }: Props) {
     (context) => context,
   );
 
-
   return (
     <PatientsTableContainer>
       <TableHead>
@@ -47,7 +46,7 @@ export function PatientsTable({ patients }: Props) {
             </button>
           </th>
           <th>
-            <button onClick={() => handleParams({ sort: 'city' })}>
+            <button onClick={() => handleParams({ sort: 'contact.city' })}>
               Cidade
               <ArrowsDownUp size={20} weight="bold" color="#136CDC" />
             </button>

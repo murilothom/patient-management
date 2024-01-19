@@ -4,9 +4,9 @@ import { Patient } from "../types/Patient"
 import patientsService from "../api/patientsService"
 import { toast } from "react-toastify"
 
-interface Params {
-  sort?: 'createdAt' | 'name' | 'document' | 'dateOfBirth' | 'email' | 'city'
-  order?: 'asc' | 'desc'
+export interface Params {
+  sort?: string
+  order?: string
   query?: string
 }
 
@@ -36,16 +36,14 @@ export function PatientsProvider({ children }: IPatientsProviderProps) {
   const fetchPatients = useCallback(async () => {
     try {
       const patients = await patientsService.get({
-        params: {
           sort: params.sort,
           order: params.order,
           query: params.query,
-        },
-      })
+      });
 
     setPatients(patients)
     } catch (error) {
-      toast.error('Ocorreu um erro ao buscar os pacientes.');
+      toast.error('Ocorreu um erro ao buscar os pacientes.', { theme: 'colored' });
     }
   }, [params]);
 
@@ -70,14 +68,14 @@ export function PatientsProvider({ children }: IPatientsProviderProps) {
       await patientsService.delete(selectedPatient.id);
       toast.success('Paciente excluído com sucesso.');
     } catch (error) {
-      toast.error('Ocorreu um erro ao tentar excluir o paciente.');
+      toast.error('Ocorreu um erro ao tentar excluir o paciente.', { theme: 'colored' });
     }
   }, [selectedPatient])
 
   const setCurrentPatient = useCallback((patient: Patient) => setSelectedPatient(patient), []);
 
   useEffect(() => {
-    fetchPatients()
+    fetchPatients();
   }, [fetchPatients, params]);
 
   return (

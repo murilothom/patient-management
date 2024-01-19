@@ -16,7 +16,7 @@ function App() {
         </DeletePatientModalProvider>
       </PatientsProvider>
 
-      <ToastContainer theme="colored" />
+      <ToastContainer />
       <GlobalStyle />
     </ThemeProvider>
   )
