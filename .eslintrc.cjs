@@ -19,7 +19,8 @@ module.exports = {
     '@typescript-eslint/no-explicit-any': 'off',
     'import/prefer-default-export': 'off',
     'react/react-in-jsx-scope': 'off',
-    'import/no-cycle': 'off'
+    'import/no-cycle': 'off',
+    'no-underscore-dangle': 'off'
   },
   ignorePatterns: [".eslintrc.cjs", "vite.config.ts"]
 }

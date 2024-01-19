@@ -1,7 +1,7 @@
 import { Contact } from './Contact';
 
 export interface Patient {
-  id: string,
+  _id: string,
   name: string,
   nickname: string,
   email: string,
@@ -11,6 +11,7 @@ export interface Patient {
   rg: string,
   gender: string,
   maritalStatus: string,
+  additionalObservations?: string,
   contact: Contact,
   createdAt: Date,
   updatedAt: Date,
