@@ -1,9 +1,11 @@
-import { MagnifyingGlass } from "phosphor-react";
-import { SearchFieldContainer } from "./styles";
-import { ChangeEvent, useEffect, useRef, useState } from "react";
-import { useContextSelector } from "use-context-selector";
-import { PatientsContext } from "../../../../contexts/PatientsContext";
-import { useDebounce } from "use-debounce";
+import { MagnifyingGlass } from 'phosphor-react';
+import {
+  ChangeEvent, useEffect, useRef, useState,
+} from 'react';
+import { useContextSelector } from 'use-context-selector';
+import { useDebounce } from 'use-debounce';
+import { PatientsContext } from '../../../../contexts/PatientsContext';
+import { SearchFieldContainer } from './styles';
 
 export function SearchField() {
   const [query, setQuery] = useState<string>('');
@@ -21,7 +23,7 @@ export function SearchField() {
   }
 
   useEffect(() => {
-    if (!firstFetch) { return }
+    if (!firstFetch) { return; }
     handleParams({ query: queryValue });
   }, [handleParams, queryValue, firstFetch]);
 
@@ -35,8 +37,8 @@ export function SearchField() {
         type="text"
         placeholder="Pesquisar"
         value={query}
-        onChange={handleSearch} 
+        onChange={handleSearch}
       />
     </SearchFieldContainer>
-  )
+  );
 }

@@ -1,11 +1,11 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const SearchFieldContainer = styled.div`
   line-height: 0;
   width: 11.25rem;
   height: 2.5rem;
   padding: 0.625rem 0.9375rem;
-  border: 1px solid ${({ theme }) => theme["gray-200"]};
+  border: 1px solid ${({ theme }) => theme['gray-200']};
   border-radius: 5px;
 
   display: flex;
@@ -14,7 +14,7 @@ export const SearchFieldContainer = styled.div`
   & > input {
     max-width: calc(100% - 1rem);
     border: none;
-    color: ${({ theme }) => theme["gray-400"]};
+    color: ${({ theme }) => theme['gray-400']};
     box-shadow: none;
   }
 `;

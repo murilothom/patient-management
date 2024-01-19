@@ -1,5 +1,5 @@
-import { ReactNode, useState } from "react";
-import { createContext } from "use-context-selector";
+import { ReactNode, useMemo, useState } from 'react';
+import { createContext } from 'use-context-selector';
 
 interface DeletePatientModalContextType {
   onOpen: () => void
@@ -13,17 +13,21 @@ interface DeletePatientModalProviderProps {
   children: ReactNode
 }
 
-export const DeletePatientModalProvider = ({ children }: DeletePatientModalProviderProps) => {
+export function DeletePatientModalProvider({ children }: DeletePatientModalProviderProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   const onOpen = () => setIsOpen(true);
   const onClose = () => setIsOpen(false);
 
+  const contextValue = useMemo(() => ({
+    onOpen,
+    onClose,
+    isOpen,
+  }), [onOpen, onClose, isOpen]);
+
   return (
-    <DeletePatientModalContext.Provider
-      value={{ onOpen, onClose, isOpen }}
-    >
+    <DeletePatientModalContext.Provider value={contextValue}>
       {children}
     </DeletePatientModalContext.Provider>
   );
-};
+}

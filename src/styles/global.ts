@@ -1,4 +1,4 @@
-import { createGlobalStyle } from 'styled-components'
+import { createGlobalStyle } from 'styled-components';
 
 export const GlobalStyle = createGlobalStyle`
   * {
@@ -30,4 +30,4 @@ export const GlobalStyle = createGlobalStyle`
   p {
     font: 400 1rem 'Source Sans 3', Arial, Helvetica, sans-serif;
   }
-`
+`;

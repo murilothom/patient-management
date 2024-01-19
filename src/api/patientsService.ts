@@ -1,23 +1,21 @@
-import { Params } from "../contexts/PatientsContext";
-import { Patient } from "../types/Patient";
-import { Service } from "./service";
+import { Params } from '../contexts/PatientsContext';
+import { Patient } from '../types/Patient';
+import { Service } from './service';
 
-const baseURL = "http://localhost:3000/patients";
+const baseURL = 'http://localhost:3000/patients';
 
 export class PatientsService {
   constructor(private service: Service) {}
 
-  public get = async (params: Params): Promise<Patient[]> => {
-    return this.service.get(baseURL, { params: {
+  public get = async (params: Params): Promise<Patient[]> => this.service.get(baseURL, {
+    params: {
       _sort: params.sort,
       _order: params.order,
-      q: params.query
-    } }).then(x => x.data);
-  }
+      q: params.query,
+    },
+  }).then((x) => x.data);
 
-  public delete = async (id: string): Promise<void> => {
-    return this.service.delete(`${baseURL}/${id}`);
-  }
+  public delete = async (id: string): Promise<void> => this.service.delete(`${baseURL}/${id}`);
 }
 
 const service = new Service();

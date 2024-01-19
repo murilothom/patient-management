@@ -1,27 +1,38 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 
 export class Service {
-  private axiosInstance = (): AxiosInstance => {
-    return axios.create();
-  };
+  private axiosInstance;
 
-  public get = async <T>(url: string, config?: AxiosRequestConfig): Promise<T | any> => {
-    return this.axiosInstance().get(url, config);
-  };
+  constructor() {
+    this.axiosInstance = (): AxiosInstance => axios.create();
+  }
 
-  public post = async <T>(url: string, params?: any, config?: AxiosRequestConfig): Promise<T | any> => {
-    return this.axiosInstance().post(url, params, config);
-  };
+  public get = async <T>(
+    url: string,
+    config?: AxiosRequestConfig,
+  ): Promise<T | any> => this.axiosInstance().get(url, config);
 
-  public put = async <T>(url: string, params?: any, config?: AxiosRequestConfig): Promise<T | any> => {
-    return this.axiosInstance().put(url, params, config);
-  };
+  public post = async <T>(
+    url: string,
+    params?: any,
+    config?: AxiosRequestConfig,
+  ): Promise<T | any> => this.axiosInstance().post(url, params, config);
 
-  public delete = async <T>(url: string, params?: any, config?: AxiosRequestConfig): Promise<T | any> => {
-    return this.axiosInstance().delete(url, config);
-  };
+  public put = async <T>(
+    url: string,
+    params?: any,
+    config?: AxiosRequestConfig,
+  ): Promise<T | any> => this.axiosInstance().put(url, params, config);
 
-  public patch = async <T>(url: string, params?: any, config?: AxiosRequestConfig): Promise<T | any> => {
-    return this.axiosInstance().patch(url, params, config);
-  };
+  public delete = async <T>(
+    url: string,
+    params?: any,
+    config?: AxiosRequestConfig,
+  ): Promise<T | any> => this.axiosInstance().delete(url, config);
+
+  public patch = async <T>(
+    url: string,
+    params?: any,
+    config?: AxiosRequestConfig,
+  ): Promise<T | any> => this.axiosInstance().patch(url, params, config);
 }

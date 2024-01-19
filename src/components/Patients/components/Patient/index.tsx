@@ -1,11 +1,11 @@
-import { useRef, useState, useEffect } from "react";
-import { Patient } from "../../../../types/Patient";
-import { dateFormatter, documentFormatter } from "../../../../utils/formatter";
-import { DotsThree } from "phosphor-react";
-import { ActionsButtonsWrapper, PatientInfo } from "./styles";
-import { DeletePatientModalContext } from "../../../../contexts/DeletePatientModalContext";
-import { useContextSelector } from "use-context-selector";
-import { PatientsContext } from "../../../../contexts/PatientsContext";
+import { useRef, useState, useEffect } from 'react';
+import { DotsThree } from 'phosphor-react';
+import { useContextSelector } from 'use-context-selector';
+import { Patient } from '../../../../types/Patient';
+import { dateFormatter, documentFormatter } from '../../../../utils/formatter';
+import { ActionsButtonsWrapper, PatientInfo } from './styles';
+import { DeletePatientModalContext } from '../../../../contexts/DeletePatientModalContext';
+import { PatientsContext } from '../../../../contexts/PatientsContext';
 
 interface Props {
   patient: Patient
@@ -14,28 +14,28 @@ interface Props {
 export function PatientDetail({ patient }: Props) {
   const [isActionsOpen, setIsActionsOpen] = useState(false);
   const actionsButtonRef = useRef<HTMLButtonElement>(null);
-  const { onOpen: onOpenDeleteModal }= useContextSelector(
+  const { onOpen: onOpenDeleteModal } = useContextSelector(
     DeletePatientModalContext,
-    (context) => context
+    (context) => context,
   );
-  const setCurrentPatient= useContextSelector(
+  const setCurrentPatient = useContextSelector(
     PatientsContext,
-    (context) => context.setCurrentPatient
+    (context) => context.setCurrentPatient,
   );
 
   useEffect(() => {
     const handleClickOutsideButtonActions = (event: MouseEvent) => {
       if (
-        actionsButtonRef.current &&
-        !actionsButtonRef.current.contains(event.target as Node) &&
-        isActionsOpen
+        actionsButtonRef.current
+        && !actionsButtonRef.current.contains(event.target as Node)
+        && isActionsOpen
       ) {
         setIsActionsOpen(false);
       }
     };
-    document.addEventListener("mousedown", handleClickOutsideButtonActions);
+    document.addEventListener('mousedown', handleClickOutsideButtonActions);
     return () => {
-      document.removeEventListener("mousedown", handleClickOutsideButtonActions);
+      document.removeEventListener('mousedown', handleClickOutsideButtonActions);
     };
   }, [isActionsOpen]);
 
@@ -63,7 +63,7 @@ export function PatientDetail({ patient }: Props) {
         <span>{patient.contact.city}</span>
       </PatientInfo>
       <PatientInfo>
-        <button ref={actionsButtonRef}>
+        <button aria-label="open-action-buttons" type="button" ref={actionsButtonRef}>
           <DotsThree
             weight="bold"
             color="#000000"
@@ -73,8 +73,8 @@ export function PatientDetail({ patient }: Props) {
         </button>
         {isActionsOpen ? (
           <ActionsButtonsWrapper>
-            <button ref={actionsButtonRef}>Editar</button>
-            <button ref={actionsButtonRef} onClick={handleOpenDeleteModal}>
+            <button type="button" ref={actionsButtonRef}>Editar</button>
+            <button type="button" ref={actionsButtonRef} onClick={handleOpenDeleteModal}>
               Excluir
             </button>
           </ActionsButtonsWrapper>

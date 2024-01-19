@@ -1,8 +1,8 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const PatientInfo = styled.td`
   padding: 0.75rem 1rem;
-  color: ${({ theme }) => theme["gray-700"]};
+  color: ${({ theme }) => theme['gray-700']};
   font-size: 0.875rem;
 
   & > button {
@@ -36,14 +36,14 @@ export const ActionsButtonsWrapper = styled.div`
   & > button {
     font-size: 0.875rem;
     cursor: pointer;
-    color: ${({ theme }) => theme["gray-400"]};
+    color: ${({ theme }) => theme['gray-400']};
     background-color: ${({ theme }) => theme.white};
     width: 100%;
     text-align: left;
     padding: 0.625rem 1rem;
     border: none;
     z-index: 1;
-    border: 1px solid ${({ theme }) => theme["gray-200"]};
+    border: 1px solid ${({ theme }) => theme['gray-200']};
 
     &:first-child {
       border-radius: 5px 5px 0 0;
@@ -56,7 +56,7 @@ export const ActionsButtonsWrapper = styled.div`
 
     &:hover {
       color: ${({ theme }) => theme.blue};
-      background-color: ${({ theme }) => theme["light-blue"]};
+      background-color: ${({ theme }) => theme['light-blue']};
     }
 
     &:focus {

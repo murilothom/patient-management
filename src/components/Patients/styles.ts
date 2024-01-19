@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const PatientsContainer = styled.section`
   max-width: 64.5rem;

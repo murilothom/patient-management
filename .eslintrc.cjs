@@ -2,10 +2,12 @@ module.exports = {
   root: true,
   env: { browser: true, es2020: true },
   extends: [
-    'eslint:recommended',
-    'plugin:@typescript-eslint/recommended',
-    'plugin:react-hooks/recommended',
+    'airbnb',
+    'airbnb-typescript'
   ],
+  parserOptions: {
+    project: './tsconfig.json'
+  },
   ignorePatterns: ['dist', '.eslintrc.cjs'],
   parser: '@typescript-eslint/parser',
   plugins: ['react-refresh'],
@@ -14,6 +16,10 @@ module.exports = {
       'warn',
       { allowConstantExport: true },
     ],
-    "@typescript-eslint/no-explicit-any": "off"
+    '@typescript-eslint/no-explicit-any': 'off',
+    'import/prefer-default-export': 'off',
+    'react/react-in-jsx-scope': 'off',
+    'import/no-cycle': 'off'
   },
+  ignorePatterns: [".eslintrc.cjs", "vite.config.ts"]
 }

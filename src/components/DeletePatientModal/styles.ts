@@ -1,5 +1,5 @@
-import { styled } from "styled-components";
-import { Dialog } from '@headlessui/react'
+import { styled } from 'styled-components';
+import { Dialog } from '@headlessui/react';
 
 export const DialogContainer = styled(Dialog)`
   position: relative;
@@ -28,7 +28,7 @@ export const Header = styled.header`
   justify-content: space-between;
   align-items: center;
   padding: 1rem;
-`
+`;
 
 export const Title = styled(Dialog.Title)`
   font-size: 1.5rem;
@@ -49,7 +49,7 @@ export const CloseButton = styled.button`
 
 export const Content = styled.div`
   width: 100%;
-  border: 1px solid ${({ theme }) => theme["gray-300"]};
+  border: 1px solid ${({ theme }) => theme['gray-300']};
   border-left: none;
   border-right: none;
 
@@ -97,7 +97,7 @@ export const CancelButton = styled(BaseButton)`
   background-color: transparent;
 
   &:hover {
-    background-color: ${({ theme }) => theme["light-blue"]};
+    background-color: ${({ theme }) => theme['light-blue']};
   }
 `;
 

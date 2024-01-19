@@ -1,3 +1,5 @@
+import { X } from 'phosphor-react';
+import { useContextSelector } from 'use-context-selector';
 import {
   CloseButton,
   DialogContainer,
@@ -8,11 +10,9 @@ import {
   Content,
   ButtonsWrapper,
   CancelButton,
-  DeleteButton
+  DeleteButton,
 } from './styles';
-import { X } from 'phosphor-react';
 import DeletePatientImg from '../../assets/delete-patient-image.png';
-import { useContextSelector } from "use-context-selector";
 import { DeletePatientModalContext } from '../../contexts/DeletePatientModalContext';
 import { PatientsContext } from '../../contexts/PatientsContext';
 import { Patient } from '../../types/Patient';
@@ -23,24 +23,24 @@ export function DeletePatientModal() {
     isOpen,
   } = useContextSelector(
     DeletePatientModalContext,
-    (context) => context
+    (context) => context,
   );
 
   const {
     handleDeletePatient,
     setCurrentPatient,
-    fetchPatients
+    fetchPatients,
   } = useContextSelector(
     PatientsContext,
-    (context) => context
+    (context) => context,
   );
 
-  async function deletePatient() {
+  const deletePatient = async () => {
     await handleDeletePatient();
     setCurrentPatient({} as Patient);
     await fetchPatients();
     onClose();
-  } 
+  };
 
   return (
     <DialogContainer open={isOpen} onClose={onClose}>
@@ -50,12 +50,12 @@ export function DeletePatientModal() {
             <Title>Excluir paciente?</Title>
 
             <CloseButton onClick={onClose}>
-              <X size={24} weight='bold' color='#656565' />
+              <X size={24} weight="bold" color="#656565" />
             </CloseButton>
           </Header>
 
           <Content>
-            <img src={DeletePatientImg} />
+            <img src={DeletePatientImg} alt="" />
 
             <div>
               <h3>Tem certeza que deseja excluir o paciente selecionado?</h3>
@@ -70,5 +70,5 @@ export function DeletePatientModal() {
         </DialogPanel>
       </DialogWrapper>
     </DialogContainer>
-  )
+  );
 }

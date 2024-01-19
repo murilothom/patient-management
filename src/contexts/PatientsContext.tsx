@@ -1,8 +1,10 @@
-import { ReactNode, useCallback, useEffect, useState } from "react"
-import { createContext } from "use-context-selector"
-import { Patient } from "../types/Patient"
-import patientsService from "../api/patientsService"
-import { toast } from "react-toastify"
+import {
+  ReactNode, useCallback, useEffect, useMemo, useState,
+} from 'react';
+import { createContext } from 'use-context-selector';
+import { toast } from 'react-toastify';
+import { Patient } from '../types/Patient';
+import patientsService from '../api/patientsService';
 
 export interface Params {
   sort?: string
@@ -30,36 +32,36 @@ export function PatientsProvider({ children }: IPatientsProviderProps) {
   const [params, setParams] = useState({
     sort: 'createdAt',
     order: 'desc',
-    query: ''
+    query: '',
   });
 
   const fetchPatients = useCallback(async () => {
     try {
-      const patients = await patientsService.get({
-          sort: params.sort,
-          order: params.order,
-          query: params.query,
+      const response = await patientsService.get({
+        sort: params.sort,
+        order: params.order,
+        query: params.query,
       });
 
-    setPatients(patients)
+      setPatients(response);
     } catch (error) {
       toast.error('Ocorreu um erro ao buscar os pacientes.', { theme: 'colored' });
     }
   }, [params]);
 
   const handleParams = useCallback((newParams: Params) => {
-    setParams(state => {
-      const order = newParams.sort === state.sort 
-        ? state.order === 'asc'
-          ? 'desc'
-          : 'asc'
-        : 'asc';
+    setParams((state) => {
+      let order = 'desc';
+
+      if (newParams.sort === state.sort) {
+        order = state.order === 'desc' ? 'asc' : 'desc';
+      }
 
       return {
         ...state,
         ...newParams,
-        order
-      }
+        order,
+      };
     });
   }, []);
 
@@ -70,25 +72,25 @@ export function PatientsProvider({ children }: IPatientsProviderProps) {
     } catch (error) {
       toast.error('Ocorreu um erro ao tentar excluir o paciente.', { theme: 'colored' });
     }
-  }, [selectedPatient])
+  }, [selectedPatient]);
 
   const setCurrentPatient = useCallback((patient: Patient) => setSelectedPatient(patient), []);
+
+  const contextValue = useMemo(() => ({
+    patients,
+    fetchPatients,
+    handleDeletePatient,
+    setCurrentPatient,
+    handleParams,
+  }), [patients, fetchPatients, handleDeletePatient, setCurrentPatient, handleParams]);
 
   useEffect(() => {
     fetchPatients();
   }, [fetchPatients, params]);
 
   return (
-    <PatientsContext.Provider
-      value={{
-        patients,
-        fetchPatients,
-        handleDeletePatient,
-        setCurrentPatient,
-        handleParams
-      }}
-    >
+    <PatientsContext.Provider value={contextValue}>
       {children}
     </PatientsContext.Provider>
-  )
+  );
 }

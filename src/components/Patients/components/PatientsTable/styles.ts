@@ -1,4 +1,4 @@
-import { styled } from "styled-components";
+import { styled } from 'styled-components';
 
 export const PatientsTableContainer = styled.table`
   width: 100%;
@@ -6,11 +6,11 @@ export const PatientsTableContainer = styled.table`
 `;
 
 export const TableHead = styled.thead`
-  background-color: ${({ theme }) => theme["gray-100"]};
+  background-color: ${({ theme }) => theme['gray-100']};
   line-height: 0;
 
   tr > th {
-    border: 1px solid ${({ theme }) => theme["gray-200"]};
+    border: 1px solid ${({ theme }) => theme['gray-200']};
     border-left: none;
     border-right: none;
     padding: 1rem;
@@ -25,7 +25,7 @@ export const TableHead = styled.thead`
     align-items: center;
     justify-content: center;
     font-size: 0.875rem;
-    color: ${({ theme }) => theme["gray-600"]};
+    color: ${({ theme }) => theme['gray-600']};
     font-weight: 600;
     gap: 0.5rem;
   }

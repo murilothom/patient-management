@@ -1,18 +1,18 @@
-import { AddPatientButton, ButtonsWrapper, PatientsContainer, PatientsHeader } from "./styles";
-import { SearchField } from "./components/SearchFIeld";
-import { Plus } from "phosphor-react";
-import { PatientsTable } from "./components/PatientsTable";
-import { DeletePatientModal } from "../DeletePatientModal";
-import { useContextSelector } from "use-context-selector";
-import { PatientsContext } from "../../contexts/PatientsContext";
+import { Plus } from 'phosphor-react';
+import { useContextSelector } from 'use-context-selector';
+import {
+  AddPatientButton,
+  ButtonsWrapper,
+  PatientsContainer,
+  PatientsHeader,
+} from './styles';
+import { SearchField } from './components/SearchFIeld';
+import { PatientsTable } from './components/PatientsTable';
+import { DeletePatientModal } from '../DeletePatientModal';
+import { PatientsContext } from '../../contexts/PatientsContext';
 
 export function Patients() {
-  const {
-    patients
-  } = useContextSelector(
-    PatientsContext,
-    (context) => context
-  );
+  const { patients } = useContextSelector(PatientsContext, (context) => context);
 
   return (
     <PatientsContainer>
@@ -26,16 +26,12 @@ export function Patients() {
             <div>
               <Plus color="white" weight="bold" size={18} />
             </div>
-            <span>
-              Adicionar paciente
-            </span>
+            <span>Adicionar paciente</span>
           </AddPatientButton>
         </ButtonsWrapper>
       </PatientsHeader>
 
-      {patients.length ? (
-        <PatientsTable patients={patients} />
-      ) : null}
+      {patients.length ? <PatientsTable patients={patients} /> : null}
 
       <DeletePatientModal />
     </PatientsContainer>
