@@ -12,7 +12,7 @@ import {
   CancelButton,
   DeleteButton,
 } from './styles';
-import DeletePatientImg from '../../assets/delete-patient-image.png';
+import deletePatientImg from '../../assets/delete-patient-image.png';
 import { ModalContext } from '../../contexts/ModalContext';
 import { PatientsContext } from '../../contexts/PatientsContext';
 
@@ -59,7 +59,7 @@ export function DeletePatientModal() {
           </Header>
 
           <Content>
-            <img src={DeletePatientImg} alt="" />
+            <img src={deletePatientImg} alt="" />
 
             <div>
               <h3>Tem certeza que deseja excluir o paciente selecionado?</h3>

@@ -21,7 +21,8 @@ module.exports = {
     'react/react-in-jsx-scope': 'off',
     'import/no-cycle': 'off',
     'no-underscore-dangle': 'off',
-    'react/jsx-props-no-spreading': 'off'
+    'react/jsx-props-no-spreading': 'off',
+    'jsx-a11y/label-has-associated-control': 'off'
   },
   ignorePatterns: [".eslintrc.cjs", "vite.config.ts"]
 }

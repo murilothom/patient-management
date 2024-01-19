@@ -16,6 +16,7 @@ interface PatientContextType {
   patients: Patient[]
   fetchPatients: () => Promise<void>
   setCurrentPatient: (patient: Patient | null) => void
+  currentPatient: Patient | null
   handleDeletePatient: () => Promise<void>
   handleParams: (params: Partial<Params>) => void
   isFetchingPatients: boolean
@@ -80,7 +81,9 @@ export function PatientsProvider({ children }: IPatientsProviderProps) {
     }
   }, [selectedPatient]);
 
-  const setCurrentPatient = useCallback((patient: Patient) => setSelectedPatient(patient), []);
+  const setCurrentPatient = useCallback((patient: Patient | null) => {
+    setSelectedPatient(patient);
+  }, []);
 
   const contextValue = useMemo(() => ({
     patients,
@@ -89,6 +92,7 @@ export function PatientsProvider({ children }: IPatientsProviderProps) {
     setCurrentPatient,
     handleParams,
     isFetchingPatients,
+    currentPatient: selectedPatient,
   }), [
     patients,
     fetchPatients,
@@ -96,6 +100,7 @@ export function PatientsProvider({ children }: IPatientsProviderProps) {
     setCurrentPatient,
     handleParams,
     isFetchingPatients,
+    selectedPatient,
   ]);
 
   useEffect(() => {

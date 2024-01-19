@@ -1,0 +1,28 @@
+.p-dropdown-item {
+  background-color: #fff;
+  border: 1px solid #E8E8E8;
+  padding: 0.3125rem 0.875rem;
+  font-size: 0.875rem;
+  color: #565656;
+}
+
+.p-dropdown-item:last-child {
+  border-radius: 0 0 8px 8px;
+}
+
+.p-dropdown-label {
+  font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+}
+
+.react-datepicker-wrapper div svg {
+  font-size: 1.25rem;
+  top: 20%;
+  left: 6%;
+  padding: 0 !important;
+}
+
+.react-datepicker-wrapper div input {
+  padding-left: 2.75rem;
+}

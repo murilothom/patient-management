@@ -1,4 +1,4 @@
-import { styled } from 'styled-components';
+import { css, styled } from 'styled-components';
 import { Dialog } from '@headlessui/react';
 
 export const DialogContainer = styled(Dialog)`
@@ -18,25 +18,57 @@ export const DialogWrapper = styled.div`
 `;
 
 export const DialogPanel = styled(Dialog.Panel)`
-  width: 32.3125rem;
-  height: 26.125rem;
+  width: 49.5rem;
+  height: 44.1875rem;
   background-color: ${({ theme }) => theme.white};
+  padding: 2rem 1.25rem;
+  border-radius: 10px;
+  position: relative;
 `;
 
-export const Header = styled.header`
+export const NavBar = styled.nav`
+  width: 100%;
+  border-bottom:  2px solid ${({ theme }) => theme['gray-200']};
+  padding-bottom: 1.125rem;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
-  padding: 1rem;
+  gap: 1.125rem;
+  margin-bottom: 1.6875rem;
 `;
 
-export const Title = styled(Dialog.Title)`
-  font-size: 1.5rem;
-  color: ${({ theme }) => theme.purple};
-  font-weight: 600;
+interface Active {
+  $isActive: boolean
+}
+
+export const NavBarButton = styled.button<Active>`
+  background-color: transparent;
+  color: ${({ theme, $isActive }) => ($isActive ? theme['dark-purple'] : theme['gray-400'])};
+  border: none;
+  position: relative;
+  cursor: pointer;
+
+  &:hover {
+    filter: brightness(0.85);
+  }
+
+  ${({ $isActive }) => $isActive && css`
+    &::after {
+      position: absolute;
+      content: '';
+      width: 100%;
+      height: 2px;
+      background-color: ${({ theme }) => theme['dark-purple']};
+      bottom: -1.25rem;
+      left: 0;
+    }
+  `}
 `;
 
 export const CloseButton = styled.button`
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
   line-height: 0;
   background-color: transparent;
   cursor: pointer;
@@ -44,73 +76,5 @@ export const CloseButton = styled.button`
   
   &:focus {
     box-shadow: none;
-  }
-`;
-
-export const Content = styled.div`
-  width: 100%;
-  border: 1px solid ${({ theme }) => theme['gray-300']};
-  border-left: none;
-  border-right: none;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 1rem;
-  padding: 1.5rem 0;
-
-  & > div {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 1rem;
-    padding: 1rem;
-
-    & > h4 {
-      font-weight: 600;
-    }
-  }
-`;
-
-export const ButtonsWrapper = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  padding: 1rem;
-  gap: 1rem;
-`;
-
-const BaseButton = styled.button`
-  padding: 0.34375rem 1rem;
-  cursor: pointer;
-  font-weight: 600;
-  font-size: 0.875rem;
-  border-radius: 4px;
-`;
-
-export const CancelButton = styled(BaseButton)`
-  border: 1px solid ${({ theme }) => theme.blue};
-  color: ${({ theme }) => theme.blue};
-  background-color: transparent;
-
-  &:hover {
-    background-color: ${({ theme }) => theme['light-blue']};
-  }
-`;
-
-export const DeleteButton = styled(BaseButton)`
-  border: 1px solid ${({ theme }) => theme.red};
-  color: ${({ theme }) => theme.white};
-  background-color: ${({ theme }) => theme.red};
-
-  &:hover {
-    filter: brightness(0.95);
-  }
-
-  &:focus {
-    box-shadow: 0 0 0 2px ${({ theme }) => theme.red};
   }
 `;

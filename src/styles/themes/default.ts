@@ -3,6 +3,7 @@ export const defaultTheme = {
   black: '#000',
 
   purple: '#510972',
+  'dark-purple': '#4F1368',
 
   red: '#C52525',
 
