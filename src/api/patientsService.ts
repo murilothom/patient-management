@@ -2,17 +2,13 @@ import { Params } from '../contexts/PatientsContext';
 import { Patient } from '../types/Patient';
 import { Service } from './service';
 
-const baseURL = 'http://localhost:3000/patients';
+const baseURL = 'https://patient-management-api-5mh6.onrender.com/patient';
 
 export class PatientsService {
   constructor(private service: Service) {}
 
   public get = async (params: Params): Promise<Patient[]> => this.service.get(baseURL, {
-    params: {
-      _sort: params.sort,
-      _order: params.order,
-      q: params.query,
-    },
+    params,
   }).then((x) => x.data);
 
   public delete = async (id: string): Promise<void> => this.service.delete(`${baseURL}/${id}`);

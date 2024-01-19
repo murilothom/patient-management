@@ -4,16 +4,16 @@ import { defaultTheme } from './styles/themes/default';
 import { GlobalStyle } from './styles/global';
 import { Home } from './pages/Home';
 import 'react-toastify/dist/ReactToastify.css';
-import { DeletePatientModalProvider } from './contexts/DeletePatientModalContext';
+import { ModalProvider } from './contexts/ModalContext';
 import { PatientsProvider } from './contexts/PatientsContext';
 
 function App() {
   return (
     <ThemeProvider theme={defaultTheme}>
       <PatientsProvider>
-        <DeletePatientModalProvider>
+        <ModalProvider>
           <Home />
-        </DeletePatientModalProvider>
+        </ModalProvider>
       </PatientsProvider>
 
       <ToastContainer />

@@ -10,44 +10,35 @@ import {
   Content,
   ButtonsWrapper,
   CancelButton,
-  DeleteButton,
 } from './styles';
 import DeletePatientImg from '../../assets/delete-patient-image.png';
 import { ModalContext } from '../../contexts/ModalContext';
 import { PatientsContext } from '../../contexts/PatientsContext';
 
-export function DeletePatientModal() {
+export function PatientModal() {
   const {
-    handleCloseDeleteModal,
-    isDeleteModalOpen,
+    handleClosePatientModal,
+    isPatientModalOpen,
   } = useContextSelector(
     ModalContext,
     (context) => context,
   );
 
   const {
-    handleDeletePatient,
     setCurrentPatient,
-    fetchPatients,
+    // fetchPatients,
   } = useContextSelector(
     PatientsContext,
     (context) => context,
   );
 
-  const deletePatient = async () => {
-    await handleDeletePatient();
-    setCurrentPatient(null);
-    await fetchPatients();
-    handleCloseDeleteModal();
-  };
-
   const onClose = () => {
     setCurrentPatient(null);
-    handleCloseDeleteModal();
+    handleClosePatientModal();
   };
 
   return (
-    <DialogContainer open={isDeleteModalOpen} onClose={onClose}>
+    <DialogContainer open={isPatientModalOpen} onClose={onClose}>
       <DialogWrapper>
         <DialogPanel>
           <Header>
@@ -69,7 +60,6 @@ export function DeletePatientModal() {
 
           <ButtonsWrapper>
             <CancelButton onClick={onClose}>Cancelar</CancelButton>
-            <DeleteButton onClick={deletePatient}>Excluir</DeleteButton>
           </ButtonsWrapper>
         </DialogPanel>
       </DialogWrapper>

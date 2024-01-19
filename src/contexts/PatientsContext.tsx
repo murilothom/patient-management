@@ -7,17 +7,18 @@ import { Patient } from '../types/Patient';
 import patientsService from '../api/patientsService';
 
 export interface Params {
-  sort?: string
-  order?: string
+  sort: string
+  order: string
   query?: string
 }
 
 interface PatientContextType {
   patients: Patient[]
   fetchPatients: () => Promise<void>
-  setCurrentPatient: (patient: Patient) => void
+  setCurrentPatient: (patient: Patient | null) => void
   handleDeletePatient: () => Promise<void>
-  handleParams: (params: Params) => void
+  handleParams: (params: Partial<Params>) => void
+  isFetchingPatients: boolean
 }
 
 export const PatientsContext = createContext({} as PatientContextType);
@@ -28,7 +29,8 @@ interface IPatientsProviderProps {
 
 export function PatientsProvider({ children }: IPatientsProviderProps) {
   const [patients, setPatients] = useState<Patient[]>([]);
-  const [selectedPatient, setSelectedPatient] = useState<Patient>({} as Patient);
+  const [isFetchingPatients, setIsFetchingPatients] = useState<boolean>(false);
+  const [selectedPatient, setSelectedPatient] = useState<Patient | null>(null);
   const [params, setParams] = useState({
     sort: 'createdAt',
     order: 'desc',
@@ -37,19 +39,22 @@ export function PatientsProvider({ children }: IPatientsProviderProps) {
 
   const fetchPatients = useCallback(async () => {
     try {
+      setIsFetchingPatients(true);
       const response = await patientsService.get({
         sort: params.sort,
         order: params.order,
-        query: params.query,
+        query: params.query || undefined,
       });
 
       setPatients(response);
     } catch (error) {
       toast.error('Ocorreu um erro ao buscar os pacientes.', { theme: 'colored' });
+    } finally {
+      setIsFetchingPatients(false);
     }
   }, [params]);
 
-  const handleParams = useCallback((newParams: Params) => {
+  const handleParams = useCallback((newParams: Partial<Params>) => {
     setParams((state) => {
       let order = 'desc';
 
@@ -67,7 +72,8 @@ export function PatientsProvider({ children }: IPatientsProviderProps) {
 
   const handleDeletePatient = useCallback(async () => {
     try {
-      await patientsService.delete(selectedPatient.id);
+      if (!selectedPatient) return;
+      await patientsService.delete(selectedPatient._id);
       toast.success('Paciente excluído com sucesso.');
     } catch (error) {
       toast.error('Ocorreu um erro ao tentar excluir o paciente.', { theme: 'colored' });
@@ -82,7 +88,15 @@ export function PatientsProvider({ children }: IPatientsProviderProps) {
     handleDeletePatient,
     setCurrentPatient,
     handleParams,
-  }), [patients, fetchPatients, handleDeletePatient, setCurrentPatient, handleParams]);
+    isFetchingPatients,
+  }), [
+    patients,
+    fetchPatients,
+    handleDeletePatient,
+    setCurrentPatient,
+    handleParams,
+    isFetchingPatients,
+  ]);
 
   useEffect(() => {
     fetchPatients();

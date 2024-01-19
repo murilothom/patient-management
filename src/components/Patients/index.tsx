@@ -10,19 +10,35 @@ import { SearchField } from './components/SearchFIeld';
 import { PatientsTable } from './components/PatientsTable';
 import { DeletePatientModal } from '../DeletePatientModal';
 import { PatientsContext } from '../../contexts/PatientsContext';
+import { PatientModal } from '../PatientModal';
+import { ModalContext } from '../../contexts/ModalContext';
 
 export function Patients() {
-  const { patients } = useContextSelector(PatientsContext, (context) => context);
+  const {
+    patients,
+    isFetchingPatients,
+    setCurrentPatient,
+  } = useContextSelector(PatientsContext, (context) => context);
+
+  const { handleOpenPatientModal } = useContextSelector(
+    ModalContext,
+    (context) => context,
+  );
+
+  const openPatientModal = () => {
+    setCurrentPatient(null);
+    handleOpenPatientModal();
+  };
 
   return (
     <PatientsContainer>
-      <PatientsHeader>
+      <PatientsHeader $isFetching={isFetchingPatients}>
         <h1>Listagem de pacientes</h1>
 
         <ButtonsWrapper>
           <SearchField />
 
-          <AddPatientButton>
+          <AddPatientButton onClick={openPatientModal}>
             <div>
               <Plus color="white" weight="bold" size={18} />
             </div>
@@ -34,6 +50,7 @@ export function Patients() {
       {patients.length ? <PatientsTable patients={patients} /> : null}
 
       <DeletePatientModal />
+      <PatientModal />
     </PatientsContainer>
   );
 }

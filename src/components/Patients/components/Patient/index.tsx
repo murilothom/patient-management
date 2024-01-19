@@ -1,10 +1,10 @@
-import { useRef, useState, useEffect } from 'react';
+import { useState } from 'react';
 import { DotsThree } from 'phosphor-react';
 import { useContextSelector } from 'use-context-selector';
 import { Patient } from '../../../../types/Patient';
 import { dateFormatter, documentFormatter } from '../../../../utils/formatter';
 import { ActionsButtonsWrapper, PatientInfo } from './styles';
-import { DeletePatientModalContext } from '../../../../contexts/DeletePatientModalContext';
+import { ModalContext } from '../../../../contexts/ModalContext';
 import { PatientsContext } from '../../../../contexts/PatientsContext';
 
 interface Props {
@@ -13,9 +13,8 @@ interface Props {
 
 export function PatientDetail({ patient }: Props) {
   const [isActionsOpen, setIsActionsOpen] = useState(false);
-  const actionsButtonRef = useRef<HTMLButtonElement>(null);
-  const { onOpen: onOpenDeleteModal } = useContextSelector(
-    DeletePatientModalContext,
+  const { handleOpenDeleteModal, handleOpenPatientModal } = useContextSelector(
+    ModalContext,
     (context) => context,
   );
   const setCurrentPatient = useContextSelector(
@@ -23,27 +22,17 @@ export function PatientDetail({ patient }: Props) {
     (context) => context.setCurrentPatient,
   );
 
-  useEffect(() => {
-    const handleClickOutsideButtonActions = (event: MouseEvent) => {
-      if (
-        actionsButtonRef.current
-        && !actionsButtonRef.current.contains(event.target as Node)
-        && isActionsOpen
-      ) {
-        setIsActionsOpen(false);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutsideButtonActions);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutsideButtonActions);
-    };
-  }, [isActionsOpen]);
-
-  function handleOpenDeleteModal() {
-    onOpenDeleteModal();
+  const openDeleteModal = () => {
     setCurrentPatient(patient);
     setIsActionsOpen(false);
-  }
+    handleOpenDeleteModal();
+  };
+
+  const openPatientModal = () => {
+    setCurrentPatient(patient);
+    setIsActionsOpen(false);
+    handleOpenPatientModal();
+  };
 
   return (
     <tr>
@@ -63,18 +52,26 @@ export function PatientDetail({ patient }: Props) {
         <span>{patient.contact.city}</span>
       </PatientInfo>
       <PatientInfo>
-        <button aria-label="open-action-buttons" type="button" ref={actionsButtonRef}>
+        <button aria-label="open-action-buttons" type="button">
           <DotsThree
             weight="bold"
             color="#000000"
             size={24}
-            onClick={() => setIsActionsOpen(true)}
+            onClick={() => setIsActionsOpen(!isActionsOpen)}
           />
         </button>
         {isActionsOpen ? (
           <ActionsButtonsWrapper>
-            <button type="button" ref={actionsButtonRef}>Editar</button>
-            <button type="button" ref={actionsButtonRef} onClick={handleOpenDeleteModal}>
+            <button
+              type="button"
+              onClick={openPatientModal}
+            >
+              Editar
+            </button>
+            <button
+              type="button"
+              onClick={openDeleteModal}
+            >
               Excluir
             </button>
           </ActionsButtonsWrapper>

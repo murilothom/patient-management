@@ -17,13 +17,15 @@ export function SearchField() {
   const [queryValue] = useDebounce(query, 1000);
   const [firstFetch, setFirstFetch] = useState(false);
 
-  function handleSearch(e: ChangeEvent<HTMLInputElement>) {
+  const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value.trim());
     setFirstFetch(true);
-  }
+  };
 
   useEffect(() => {
-    if (!firstFetch) { return; }
+    if (!firstFetch) {
+      return;
+    }
     handleParams({ query: queryValue });
   }, [handleParams, queryValue, firstFetch]);
 

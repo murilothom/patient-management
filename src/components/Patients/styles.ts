@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const PatientsContainer = styled.section`
   max-width: 64.5rem;
@@ -8,7 +8,11 @@ export const PatientsContainer = styled.section`
   margin-bottom: 3rem;
 `;
 
-export const PatientsHeader = styled.header`
+interface IsFetching {
+  $isFetching: boolean;
+}
+
+export const PatientsHeader = styled.header<IsFetching>`
   padding: 1.71875rem 3.65625rem;
   background-color: ${({ theme }) => theme.white};
   width: 100%;
@@ -16,10 +20,39 @@ export const PatientsHeader = styled.header`
   justify-content: space-between;
   align-items: center;
   border-radius: 8px 8px 8px 8px;
+  position: relative;
 
   & > h1 {
     color: ${({ theme }) => theme.black};
     font-size: 0.875rem;
+  }
+
+  ${({ $isFetching }) => $isFetching && css`
+    &::after {
+    position: absolute;
+    content: '';
+    width: 100%;
+    height: 3px;
+    border-top: 3px solid ${({ theme }) => theme.blue};
+    left: 0;
+    bottom: -5px;
+    z-index: 1;
+    animation: loading 0.8s infinite;
+  }
+    `
+}
+
+  @keyframes loading {
+    from {
+      width: 0;
+      left: 0;
+      /* border-radius: 8px 0px 0px 0px; */
+    }
+    to {
+      left: 60%;
+      width: 40%;
+      /* border-radius: 0px 8px 0px 0px; */
+    }
   }
 `;
 

@@ -59,7 +59,7 @@ export function PatientsTable({ patients }: Props) {
 
       <tbody>
         {patients.map((patient) => (
-          <PatientDetail key={patient.id} patient={patient} />
+          <PatientDetail key={patient._id} patient={patient} />
         ))}
       </tbody>
     </PatientsTableContainer>
