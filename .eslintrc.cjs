@@ -20,7 +20,8 @@ module.exports = {
     'import/prefer-default-export': 'off',
     'react/react-in-jsx-scope': 'off',
     'import/no-cycle': 'off',
-    'no-underscore-dangle': 'off'
+    'no-underscore-dangle': 'off',
+    'react/jsx-props-no-spreading': 'off'
   },
   ignorePatterns: [".eslintrc.cjs", "vite.config.ts"]
 }
