@@ -6,8 +6,8 @@ const baseURL = "http://localhost:3000/patients";
 export class PatientsService {
   constructor(private service: Service) {}
 
-  public get = async (): Promise<Patient[]> => {
-    return this.service.get(baseURL).then(x => x.data);
+  public get = async (params: Record<string, any>): Promise<Patient[]> => {
+    return this.service.get(baseURL, { params }).then(x => x.data);
   }
 
   public delete = async (id: string): Promise<void> => {

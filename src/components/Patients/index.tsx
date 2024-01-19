@@ -1,28 +1,18 @@
-import { useEffect, useState } from "react";
 import { AddPatientButton, ButtonsWrapper, PatientsContainer, PatientsHeader } from "./styles";
-import { Patient } from "../../types/Patient";
-import { SearchField } from "./components/SearchFIeld";
-import patientsService from "../../api/patientsService";
+import { SearchForm } from "./components/SearchFIeld";
 import { Plus } from "phosphor-react";
 import { PatientsTable } from "./components/PatientsTable";
-import { toast } from "react-toastify";
 import { DeletePatientModal } from "../DeletePatientModal";
+import { useContextSelector } from "use-context-selector";
+import { PatientsContext } from "../../contexts/PatientsContext";
 
 export function Patients() {
-  const [patients, setPatients] = useState<Patient[]>([]);
-
-  async function getPatients() {
-    try {
-      const patients = await patientsService.get();
-      setPatients(patients);
-    } catch (error) {
-      toast.error('Ocorreu um erro ao buscar os pacientes.');
-    }
-  }
-
-  useEffect(() => {
-    getPatients();
-  }, []);
+  const {
+    patients
+  } = useContextSelector(
+    PatientsContext,
+    (context) => context
+  );
 
   return (
     <PatientsContainer>
@@ -30,7 +20,7 @@ export function Patients() {
         <h1>Listagem de pacientes</h1>
 
         <ButtonsWrapper>
-          <SearchField />
+          <SearchForm />
 
           <AddPatientButton>
             <div>

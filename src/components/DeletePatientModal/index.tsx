@@ -1,6 +1,3 @@
-// import { CloseButton, Content, Header, Overlay } from "./styles";
-// import { X } from "phosphor-react";
-// import { useState } from 'react'
 import {
   CloseButton,
   DialogContainer,
@@ -17,16 +14,33 @@ import { X } from 'phosphor-react';
 import DeletePatientImg from '../../assets/delete-patient-image.png';
 import { useContextSelector } from "use-context-selector";
 import { DeletePatientModalContext } from '../../contexts/DeletePatientModalContext';
+import { PatientsContext } from '../../contexts/PatientsContext';
+import { Patient } from '../../types/Patient';
 
 export function DeletePatientModal() {
   const {
     onClose,
     isOpen,
-    handleDeletePatient
   } = useContextSelector(
     DeletePatientModalContext,
     (context) => context
   );
+
+  const {
+    handleDeletePatient,
+    setCurrentPatient,
+    fetchPatients
+  } = useContextSelector(
+    PatientsContext,
+    (context) => context
+  );
+
+  async function deletePatient() {
+    await handleDeletePatient();
+    setCurrentPatient({} as Patient);
+    await fetchPatients();
+    onClose();
+  } 
 
   return (
     <DialogContainer open={isOpen} onClose={onClose}>
@@ -51,7 +65,7 @@ export function DeletePatientModal() {
 
           <ButtonsWrapper>
             <CancelButton onClick={onClose}>Cancelar</CancelButton>
-            <DeleteButton onClick={handleDeletePatient}>Excluir</DeleteButton>
+            <DeleteButton onClick={deletePatient}>Excluir</DeleteButton>
           </ButtonsWrapper>
         </DialogPanel>
       </DialogWrapper>

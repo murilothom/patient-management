@@ -5,13 +5,16 @@ import { Home } from "./pages/Home"
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { DeletePatientModalProvider } from "./contexts/DeletePatientModalContext";
+import { PatientsProvider } from "./contexts/PatientsContext";
 
 function App() {
   return (
     <ThemeProvider theme={defaultTheme}>
-      <DeletePatientModalProvider>
+      <PatientsProvider>
+        <DeletePatientModalProvider>
         <Home />
-      </DeletePatientModalProvider>
+        </DeletePatientModalProvider>
+      </PatientsProvider>
 
       <ToastContainer theme="colored" />
       <GlobalStyle />
