@@ -4,13 +4,13 @@ import DatePicker, { registerLocale } from 'react-datepicker';
 import { ptBR } from 'date-fns/locale';
 import { Calendar } from 'phosphor-react';
 import { parseISO } from 'date-fns';
-import { UseFormReturn } from 'react-hook-form';
+import { FormikContextType, useFormikContext } from 'formik';
 import { ButtonWrapper, Form, Select } from './styles';
 import userImg from '../../../../assets/image-user.png';
 import { PatientsContext } from '../../../../contexts/PatientsContext';
 import 'react-datepicker/dist/react-datepicker.css';
 import { Step } from '../..';
-import { PatientSchema } from '../../../../types/PatientSchema';
+import { PatientSchema } from '../../../../lib/formik/Patient/validationSchema';
 
 registerLocale('ptBR', ptBR);
 
@@ -30,37 +30,30 @@ const maritalStatusOptions = [
 
 interface Props {
   handleChangeStep: (step: Step) => void
-  form: UseFormReturn<PatientSchema>
 }
 
-export function PatientBasicInfo({ handleChangeStep, form }: Props) {
+export function PatientBasicInfo({ handleChangeStep }: Props) {
   const {
     currentPatient,
   } = useContextSelector(
     PatientsContext,
     (context) => context,
   );
-  const [gender, setGender] = useState(currentPatient?.gender ?? '');
-  const [maritalStatus, setMaritalStatus] = useState(currentPatient?.maritalStatus ?? '');
   const [dateOfBirth, setDateOfBirth] = useState<Date | null>(
     currentPatient ? parseISO(currentPatient.dateOfBirth.toString()) : null,
   );
+
+  const formik: FormikContextType<PatientSchema> = useFormikContext();
 
   const onSubmit = () => {
     handleChangeStep(Step.CONTACT);
   };
 
   useEffect(() => {
-    if (gender) {
-      form.setValue('gender', gender);
+    if (formik.values.dateOfBirth) {
+      setDateOfBirth(new Date(formik.values.dateOfBirth));
     }
-    if (maritalStatus) {
-      form.setValue('maritalStatus', maritalStatus);
-    }
-    if (dateOfBirth) {
-      form.setValue('dateOfBirth', dateOfBirth.toString());
-    }
-  }, [gender, maritalStatus, dateOfBirth]);
+  }, [formik.values.dateOfBirth]);
 
   return (
     <div>
@@ -70,41 +63,45 @@ export function PatientBasicInfo({ handleChangeStep, form }: Props) {
           <label>
             Paciente:
             <input
+              name="name"
               type="text"
               placeholder="Digite"
-              {...form.register('name')}
               required
-              defaultValue={currentPatient?.name ?? ''}
+              value={formik.values.name}
+              onChange={formik.handleChange}
             />
           </label>
           <label>
             Apelido:
             <input
+              name="nickname"
               type="text"
               placeholder="Digite"
-              {...form.register('nickname')}
               required
-              defaultValue={currentPatient?.nickname ?? ''}
+              value={formik.values.nickname}
+              onChange={formik.handleChange}
             />
           </label>
           <label>
             Nacionalidade:
             <input
+              name="nationality"
               type="text"
               placeholder="Digite"
-              {...form.register('nationality')}
               required
-              defaultValue={currentPatient?.nationality ?? ''}
+              value={formik.values.nationality}
+              onChange={formik.handleChange}
             />
           </label>
           <label>
             Nascimento:
             <DatePicker
+              name="dateOfBirth"
               showIcon
               dateFormat="dd/MM/yyyy"
               locale="ptBR"
               selected={dateOfBirth}
-              onChange={(date: Date) => setDateOfBirth(date)}
+              onChange={(date: Date) => formik.setFieldValue('dateOfBirth', date)}
               icon={
                 <Calendar color="#136CDC" size={40} weight="bold" />
               }
@@ -113,49 +110,54 @@ export function PatientBasicInfo({ handleChangeStep, form }: Props) {
           <label>
             CPF:
             <input
+              name="document"
               type="text"
               placeholder="Digite"
-              {...form.register('document')}
               required
-              defaultValue={currentPatient?.document ?? ''}
+              value={formik.values.document}
+              onChange={formik.handleChange}
             />
           </label>
           <label>
             RG:
             <input
+              name="rg"
               type="text"
               placeholder="Digite"
-              {...form.register('rg')}
               required
-              defaultValue={currentPatient?.rg ?? ''}
+              value={formik.values.rg}
+              onChange={formik.handleChange}
             />
           </label>
           <label>
             Gênero:
             <Select
-              value={gender}
+              name="gender"
+              value={formik.values.gender}
               options={genderOptions}
               placeholder="Sem filtro"
-              onChange={(option) => setGender(option.value)}
+              onChange={(option) => formik.setFieldValue('gender', option.value)}
             />
           </label>
           <label>
             Estado civil:
             <Select
-              value={maritalStatus}
+              name="maritalStatus"
+              value={formik.values.maritalStatus}
               options={maritalStatusOptions}
               placeholder="Sem filtro"
-              onChange={(option) => setMaritalStatus(option.value)}
+              onChange={(option) => formik.setFieldValue('maritalStatus', option.value)}
             />
           </label>
           <label>
             E-mail:
             <input
+              name="email"
               type="email"
               placeholder="Digite"
-              {...form.register('email')}
               required
-              defaultValue={currentPatient?.email ?? ''}
+              value={formik.values.email}
+              onChange={formik.handleChange}
             />
           </label>
         </div>
@@ -163,14 +165,15 @@ export function PatientBasicInfo({ handleChangeStep, form }: Props) {
         <label style={{ width: '100%' }}>
           Informações adicionais
           <textarea
+            name="additionalObservations"
             placeholder="Digite"
-            {...form.register('additionalObservations')}
-            defaultValue={currentPatient?.additionalObservations ?? ''}
+            value={formik.values.additionalObservations}
+            onChange={formik.handleChange}
           />
         </label>
 
         <ButtonWrapper>
-          <button type="submit" disabled={form.formState.isSubmitting}>Próximo</button>
+          <button type="submit" disabled={formik.isSubmitting}>Próximo</button>
         </ButtonWrapper>
       </Form>
     </div>

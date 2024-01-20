@@ -1,6 +1,6 @@
 import { Params } from '../contexts/PatientsContext';
+import { PatientSchema } from '../lib/formik/Patient/validationSchema';
 import { Patient } from '../types/Patient';
-import { PatientDto } from '../types/PatientDto';
 import { Service } from './service';
 
 const baseURL = 'https://patient-management-api-5mh6.onrender.com/patient';
@@ -12,11 +12,16 @@ export class PatientsService {
     params,
   }).then((x) => x.data);
 
-  public create = (patient: PatientDto): Promise<Patient> => this.service.post(baseURL, patient);
+  public create = (patient: PatientSchema): Promise<Patient> => this.service.post(baseURL, patient);
+
+  public update = (patient: PatientSchema): Promise<Patient> => this.service.put(`${baseURL}/${patient._id}`, patient);
+
+  public save = (patient: PatientSchema): Promise<Patient> => {
+    if (patient._id) return this.update(patient);
+    return this.create(patient);
+  };
 
   public delete = (id: string): Promise<void> => this.service.delete(`${baseURL}/${id}`);
-
-  public update = (id: string, patient: PatientDto): Promise<Patient> => this.service.put(`${baseURL}/${id}`, patient);
 }
 
 const service = new Service();

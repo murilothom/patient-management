@@ -5,8 +5,6 @@ import { createContext } from 'use-context-selector';
 import { toast } from 'react-toastify';
 import { Patient } from '../types/Patient';
 import patientsService from '../api/patientsService';
-import { PatientSchema } from '../types/PatientSchema';
-import { PatientDto } from '../types/PatientDto';
 
 export interface Params {
   sort: string
@@ -22,7 +20,6 @@ interface PatientContextType {
   handleDeletePatient: () => Promise<void>
   handleParams: (params: Partial<Params>) => void
   isFetchingPatients: boolean
-  onSubmit: (data: PatientSchema) => Promise<void>
 }
 
 export const PatientsContext = createContext({} as PatientContextType);
@@ -40,22 +37,6 @@ export function PatientsProvider({ children }: IPatientsProviderProps) {
     order: 'desc',
     query: '',
   });
-
-  const onSubmit = useCallback(async (data: PatientSchema) => {
-    try {
-      const patient: PatientDto = { ...data, dateOfBirth: new Date(data.dateOfBirth) };
-      if (selectedPatient !== null) {
-        await patientsService.update(selectedPatient._id, patient);
-      } else {
-        await patientsService.create(patient);
-      }
-      toast.success('Paciente salvo com sucesso.');
-    } catch (error) {
-      toast.error('Ocorreu um erro ao tentar salvar os dados do paciente.');
-    } finally {
-      setSelectedPatient(null);
-    }
-  }, [selectedPatient]);
 
   const fetchPatients = useCallback(async () => {
     try {
@@ -112,7 +93,6 @@ export function PatientsProvider({ children }: IPatientsProviderProps) {
     handleParams,
     isFetchingPatients,
     currentPatient: selectedPatient,
-    onSubmit,
   }), [
     patients,
     fetchPatients,
@@ -121,7 +101,6 @@ export function PatientsProvider({ children }: IPatientsProviderProps) {
     handleParams,
     isFetchingPatients,
     selectedPatient,
-    onSubmit,
   ]);
 
   useEffect(() => {

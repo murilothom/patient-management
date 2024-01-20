@@ -1,116 +1,93 @@
-import { useContextSelector } from 'use-context-selector';
-import { UseFormReturn } from 'react-hook-form';
+import { FormikContextType, useFormikContext } from 'formik';
 import { Form } from './styles';
-import { PatientsContext } from '../../../../contexts/PatientsContext';
-import { ModalContext } from '../../../../contexts/ModalContext';
-import { PatientSchema } from '../../../../types/PatientSchema';
-import { Step } from '../..';
+import { PatientSchema } from '../../../../lib/formik/Patient/validationSchema';
 
-interface Props {
-  handleChangeStep: (step: Step) => void
-  form: UseFormReturn<PatientSchema>
-}
+export function Contact() {
+  const formik: FormikContextType<PatientSchema> = useFormikContext();
 
-export function Contact({ form, handleChangeStep }: Props) {
-  const {
-    handleClosePatientModal,
-  } = useContextSelector(
-    ModalContext,
-    (context) => context,
-  );
-
-  const {
-    currentPatient,
-    fetchPatients,
-    onSubmit,
-  } = useContextSelector(
-    PatientsContext,
-    (context) => context,
-  );
-
-  const onSubmitData = async (data: PatientSchema) => {
-    await onSubmit(data);
-    fetchPatients();
-    handleChangeStep(Step.INFO);
-    handleClosePatientModal();
-  };
-
+  // TODO: fazer o fetch pelo cep
   return (
-    <Form onSubmit={form.handleSubmit(onSubmitData)}>
+    <Form onSubmit={formik.handleSubmit}>
       <div>
         <label>
           CEP:
           <input
+            name="contact.postalCode"
             type="text"
             placeholder="Digite"
-            {...form.register('contact.postalCode')}
             required
-            defaultValue={currentPatient?.contact.postalCode ?? ''}
+            value={formik.values.contact.postalCode}
+            onChange={formik.handleChange}
           />
         </label>
         <label>
-          Apelido:
+          Cidade:
           <input
+            name="contact.city"
             type="text"
             placeholder="Digite"
-            {...form.register('contact.city')}
             required
-            defaultValue={currentPatient?.contact.city ?? ''}
+            value={formik.values.contact.city}
+            onChange={formik.handleChange}
           />
         </label>
         <label>
-          Apelido:
+          UF:
           <input
+            name="contact.uf"
             type="text"
             placeholder="Digite"
-            {...form.register('contact.uf')}
             required
-            defaultValue={currentPatient?.contact.uf ?? ''}
+            value={formik.values.contact.uf}
+            onChange={formik.handleChange}
           />
         </label>
         <label>
-          Apelido:
+          Endereço:
           <input
+            name="contact.address"
             type="text"
             placeholder="Digite"
-            {...form.register('contact.address')}
-            required
-            defaultValue={currentPatient?.contact.address ?? ''}
+            value={formik.values.contact.address}
+            onChange={formik.handleChange}
           />
         </label>
         <label>
-          Apelido:
+          Número:
           <input
+            name="contact.number"
             type="text"
             placeholder="Digite"
-            {...form.register('contact.number')}
             required
-            defaultValue={currentPatient?.contact.number ?? ''}
+            value={formik.values.contact.number}
+            onChange={formik.handleChange}
           />
         </label>
         <label>
-          Apelido:
+          Bairro:
           <input
+            name="contact.neighborhood"
             type="text"
             placeholder="Digite"
-            {...form.register('contact.neighborhood')}
             required
-            defaultValue={currentPatient?.contact.neighborhood ?? ''}
+            value={formik.values.contact.neighborhood}
+            onChange={formik.handleChange}
           />
         </label>
         <label>
-          Apelido:
+          Complemento:
           <input
+            name="contact.complement"
             type="text"
             placeholder="Digite"
-            {...form.register('contact.complement')}
             required
-            defaultValue={currentPatient?.contact.complement ?? ''}
+            value={formik.values.contact.complement}
+            onChange={formik.handleChange}
           />
         </label>
       </div>
       <footer>
-        <button disabled={form.formState.isSubmitting} type="submit">Salvar</button>
+        <button disabled={formik.isSubmitting} type="submit">Salvar</button>
       </footer>
     </Form>
   );
