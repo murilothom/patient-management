@@ -9,7 +9,6 @@ import { ButtonWrapper, Form, Select } from './styles';
 import userImg from '../../../../assets/image-user.png';
 import { PatientsContext } from '../../../../contexts/PatientsContext';
 import 'react-datepicker/dist/react-datepicker.css';
-import { Step } from '../..';
 import { PatientSchema } from '../../../../lib/formik/Patient/validationSchema';
 
 registerLocale('ptBR', ptBR);
@@ -27,6 +26,11 @@ const maritalStatusOptions = [
   { value: 'divorced', label: 'Divorciado(a)' },
   { value: 'widower', label: 'Viúvo(a)' },
 ];
+
+enum Step {
+  INFO = 1,
+  CONTACT = 2,
+}
 
 interface Props {
   handleChangeStep: (step: Step) => void

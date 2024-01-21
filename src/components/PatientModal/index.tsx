@@ -19,7 +19,7 @@ import { getInitialValues } from '../../lib/formik/Patient/initialValues';
 import { PatientSchema, patientSchema } from '../../lib/formik/Patient/validationSchema';
 import patientsService from '../../api/patientsService';
 
-export enum Step {
+enum Step {
   INFO = 1,
   CONTACT = 2,
 }

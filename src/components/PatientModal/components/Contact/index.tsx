@@ -1,9 +1,29 @@
 import { FormikContextType, useFormikContext } from 'formik';
+import { useEffect } from 'react';
 import { Form } from './styles';
 import { PatientSchema } from '../../../../lib/formik/Patient/validationSchema';
+import cepService from '../../../../api/cepService';
 
 export function Contact() {
   const formik: FormikContextType<PatientSchema> = useFormikContext();
+
+  const fetchAddress = async () => {
+    if (!formik.values.contact.postalCode?.length) return;
+    const address = await cepService.get(formik.values.contact.postalCode);
+
+    formik.setFieldValue('contact.city', address.localidade);
+    formik.setFieldValue('contact.uf', address.uf);
+    formik.setFieldValue('contact.address', address.logradouro);
+    formik.setFieldValue('contact.neighborhood', address.bairro);
+    formik.setFieldValue('contact.number', '');
+    formik.setFieldValue('contact.complement', '');
+  };
+
+  useEffect(() => {
+    if (formik.values.contact.postalCode?.length === 8) {
+      fetchAddress();
+    }
+  }, [formik.values.contact.postalCode]);
 
   // TODO: fazer o fetch pelo cep
   return (

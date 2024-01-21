@@ -1,7 +1,7 @@
 import { CEPResponse } from '../types/CEPResponse';
 import { Service } from './service';
 
-const baseURL = 'viacep.com.br/ws';
+const baseURL = 'https://viacep.com.br/ws';
 
 export class CepService {
   constructor(private service: Service) {}
