@@ -2,9 +2,9 @@ import {
   ReactNode, useCallback, useEffect, useMemo, useState,
 } from 'react';
 import { createContext } from 'use-context-selector';
-import { toast } from 'react-toastify';
 import { Patient } from '../types/Patient';
 import patientsService from '../api/patientsService';
+import toast from 'react-hot-toast';
 
 export interface Params {
   sort: string
@@ -49,7 +49,7 @@ export function PatientsProvider({ children }: IPatientsProviderProps) {
 
       setPatients(response);
     } catch (error) {
-      toast.error('Ocorreu um erro ao buscar os pacientes.', { theme: 'colored' });
+      toast.error('Ocorreu um erro ao buscar os pacientes.');
     } finally {
       setIsFetchingPatients(false);
     }
@@ -77,7 +77,7 @@ export function PatientsProvider({ children }: IPatientsProviderProps) {
       await patientsService.delete(selectedPatient._id);
       toast.success('Paciente excluído com sucesso.');
     } catch (error) {
-      toast.error('Ocorreu um erro ao tentar excluir o paciente.', { theme: 'colored' });
+      toast.error('Ocorreu um erro ao tentar excluir o paciente.');
     }
   }, [selectedPatient]);
 

@@ -1,31 +1,64 @@
 import { FormikContextType, useFormikContext } from 'formik';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { useContextSelector } from 'use-context-selector';
+import toast from 'react-hot-toast';
 import { Form } from './styles';
 import { PatientSchema } from '../../../../lib/formik/Patient/validationSchema';
 import cepService from '../../../../api/cepService';
+import { PatientsContext } from '../../../../contexts/PatientsContext';
+import { useMask } from '../../../../hooks/useMask';
 
 export function Contact() {
+  const {
+    currentPatient,
+  } = useContextSelector(
+    PatientsContext,
+    (context) => context,
+  );
+  const [isFetchingAddressData, setIsFetchingAddressData] = useState(false);
   const formik: FormikContextType<PatientSchema> = useFormikContext();
 
-  const fetchAddress = async () => {
-    if (!formik.values.contact.postalCode?.length) return;
-    const address = await cepService.get(formik.values.contact.postalCode);
+  const {
+    maskedValue: maskedPostalCode,
+    cleanedValue: cleanedPostalCode,
+  } = useMask('postalCode', formik.values.contact.postalCode);
 
-    formik.setFieldValue('contact.city', address.localidade);
-    formik.setFieldValue('contact.uf', address.uf);
-    formik.setFieldValue('contact.address', address.logradouro);
-    formik.setFieldValue('contact.neighborhood', address.bairro);
-    formik.setFieldValue('contact.number', '');
-    formik.setFieldValue('contact.complement', '');
+  const fetchAddress = async () => {
+    try {
+      setIsFetchingAddressData(true);
+      const address = await cepService.get(cleanedPostalCode);
+      formik.setFieldValue('contact.city', address.localidade);
+      formik.setFieldValue('contact.uf', address.uf);
+      formik.setFieldValue('contact.address', address.logradouro);
+      formik.setFieldValue('contact.neighborhood', address.bairro);
+      if (currentPatient?.contact?.postalCode !== formik.values.contact.postalCode) {
+        formik.setFieldValue('contact.number', '');
+        formik.setFieldValue('contact.complement', '');
+      } else {
+        formik.setFieldValue('contact.number', currentPatient.contact.number);
+        formik.setFieldValue('contact.complement', currentPatient.contact.complement);
+      }
+    } catch (error) {
+      toast.error('Verifique o CEP inserido.');
+    } finally {
+      setIsFetchingAddressData(false);
+    }
   };
 
   useEffect(() => {
-    if (formik.values.contact.postalCode?.length === 8) {
-      fetchAddress();
+    const isValidPostalCode = cleanedPostalCode.length >= 5;
+    if (!isValidPostalCode) {
+      return;
     }
+    const timeout = setTimeout(() => {
+      fetchAddress();
+    }, 1500);
+
+    return () => {
+      clearTimeout(timeout);
+    };
   }, [formik.values.contact.postalCode]);
 
-  // TODO: fazer o fetch pelo cep
   return (
     <Form onSubmit={formik.handleSubmit}>
       <div>
@@ -35,9 +68,9 @@ export function Contact() {
             name="contact.postalCode"
             type="text"
             placeholder="Digite"
-            required
-            value={formik.values.contact.postalCode}
-            onChange={formik.handleChange}
+            value={maskedPostalCode}
+            onChange={e => formik.setFieldValue('contact.postalCode', e.target.value.replace(/\D/g, ''))}
+            disabled={formik.isSubmitting || isFetchingAddressData}
           />
         </label>
         <label>
@@ -46,9 +79,9 @@ export function Contact() {
             name="contact.city"
             type="text"
             placeholder="Digite"
-            required
             value={formik.values.contact.city}
             onChange={formik.handleChange}
+            disabled={formik.isSubmitting || isFetchingAddressData}
           />
         </label>
         <label>
@@ -57,9 +90,9 @@ export function Contact() {
             name="contact.uf"
             type="text"
             placeholder="Digite"
-            required
             value={formik.values.contact.uf}
             onChange={formik.handleChange}
+            disabled={formik.isSubmitting || isFetchingAddressData}
           />
         </label>
         <label>
@@ -78,9 +111,9 @@ export function Contact() {
             name="contact.number"
             type="text"
             placeholder="Digite"
-            required
             value={formik.values.contact.number}
             onChange={formik.handleChange}
+            disabled={formik.isSubmitting || isFetchingAddressData}
           />
         </label>
         <label>
@@ -89,9 +122,9 @@ export function Contact() {
             name="contact.neighborhood"
             type="text"
             placeholder="Digite"
-            required
             value={formik.values.contact.neighborhood}
             onChange={formik.handleChange}
+            disabled={formik.isSubmitting || isFetchingAddressData}
           />
         </label>
         <label>
@@ -100,9 +133,9 @@ export function Contact() {
             name="contact.complement"
             type="text"
             placeholder="Digite"
-            required
             value={formik.values.contact.complement}
             onChange={formik.handleChange}
+            disabled={formik.isSubmitting || isFetchingAddressData}
           />
         </label>
       </div>

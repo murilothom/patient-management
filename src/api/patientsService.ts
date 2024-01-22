@@ -3,7 +3,8 @@ import { PatientSchema } from '../lib/formik/Patient/validationSchema';
 import { Patient } from '../types/Patient';
 import { Service } from './service';
 
-const baseURL = 'https://patient-management-api-5mh6.onrender.com/patient';
+// const baseURL = 'https://patient-management-api-5mh6.onrender.com/patient'; /* URL Caso API NÃO estiver sendo executada localmente */
+const baseURL = 'http://localhost:3000/patient'; /* URL Caso API estiver sendo executada localmente */
 
 export class PatientsService {
   constructor(private service: Service) {}

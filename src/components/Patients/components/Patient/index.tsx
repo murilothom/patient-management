@@ -2,10 +2,11 @@ import { useState } from 'react';
 import { DotsThree } from 'phosphor-react';
 import { useContextSelector } from 'use-context-selector';
 import { Patient } from '../../../../types/Patient';
-import { dateFormatter, documentFormatter } from '../../../../utils/formatter';
+import { dateFormatter } from '../../../../utils/formatter';
 import { ActionsButtonsWrapper, PatientInfo } from './styles';
 import { ModalContext } from '../../../../contexts/ModalContext';
 import { PatientsContext } from '../../../../contexts/PatientsContext';
+import { useMask } from '../../../../hooks/useMask';
 
 interface Props {
   patient: Patient
@@ -21,6 +22,7 @@ export function PatientDetail({ patient }: Props) {
     PatientsContext,
     (context) => context.setCurrentPatient,
   );
+  const { maskedValue: maskedDocument } = useMask('cpf', patient.document);
 
   const openDeleteModal = () => {
     setCurrentPatient(patient);
@@ -40,7 +42,7 @@ export function PatientDetail({ patient }: Props) {
         <span>{patient.name}</span>
       </PatientInfo>
       <PatientInfo>
-        <span>{documentFormatter(patient.document)}</span>
+        <span>{maskedDocument}</span>
       </PatientInfo>
       <PatientInfo>
         <span>{dateFormatter.format(new Date(patient.dateOfBirth))}</span>

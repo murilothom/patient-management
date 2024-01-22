@@ -22,7 +22,8 @@ module.exports = {
     'import/no-cycle': 'off',
     'no-underscore-dangle': 'off',
     'react/jsx-props-no-spreading': 'off',
-    'jsx-a11y/label-has-associated-control': 'off'
+    'jsx-a11y/label-has-associated-control': 'off',
+    'consistent-return': 'off'
   },
   ignorePatterns: [".eslintrc.cjs", "vite.config.ts"]
 }

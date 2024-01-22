@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { X } from 'phosphor-react';
 import { useContextSelector } from 'use-context-selector';
 import { Formik } from 'formik';
-import { toast } from 'react-toastify';
+import toast from 'react-hot-toast';
 import {
   CloseButton,
   DialogContainer,
@@ -67,7 +67,7 @@ export function PatientModal() {
   };
 
   return (
-    <DialogContainer open={isPatientModalOpen} onClose={onClose}>
+    <DialogContainer open={isPatientModalOpen} onClose={() => {}}>
       <Formik
         initialValues={getInitialValues(currentPatient)}
         onSubmit={onSubmit}

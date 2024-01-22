@@ -10,6 +10,7 @@ import userImg from '../../../../assets/image-user.png';
 import { PatientsContext } from '../../../../contexts/PatientsContext';
 import 'react-datepicker/dist/react-datepicker.css';
 import { PatientSchema } from '../../../../lib/formik/Patient/validationSchema';
+import { useMask } from '../../../../hooks/useMask';
 
 registerLocale('ptBR', ptBR);
 
@@ -49,6 +50,8 @@ export function PatientBasicInfo({ handleChangeStep }: Props) {
 
   const formik: FormikContextType<PatientSchema> = useFormikContext();
 
+  const { maskedValue: maskedDocument } = useMask('cpf', formik.values.document);
+
   const onSubmit = () => {
     handleChangeStep(Step.CONTACT);
   };
@@ -61,7 +64,7 @@ export function PatientBasicInfo({ handleChangeStep }: Props) {
 
   return (
     <div>
-      <img src={userImg} alt="User" />
+      <img src={userImg} alt="Imagem do Usuário" />
       <Form onSubmit={onSubmit}>
         <div>
           <label>
@@ -70,7 +73,6 @@ export function PatientBasicInfo({ handleChangeStep }: Props) {
               name="name"
               type="text"
               placeholder="Digite"
-              required
               value={formik.values.name}
               onChange={formik.handleChange}
             />
@@ -81,7 +83,6 @@ export function PatientBasicInfo({ handleChangeStep }: Props) {
               name="nickname"
               type="text"
               placeholder="Digite"
-              required
               value={formik.values.nickname}
               onChange={formik.handleChange}
             />
@@ -92,7 +93,6 @@ export function PatientBasicInfo({ handleChangeStep }: Props) {
               name="nationality"
               type="text"
               placeholder="Digite"
-              required
               value={formik.values.nationality}
               onChange={formik.handleChange}
             />
@@ -117,9 +117,8 @@ export function PatientBasicInfo({ handleChangeStep }: Props) {
               name="document"
               type="text"
               placeholder="Digite"
-              required
-              value={formik.values.document}
-              onChange={formik.handleChange}
+              value={maskedDocument}
+              onChange={e => formik.setFieldValue('document', e.target.value.replace(/\D/g, ''))}
             />
           </label>
           <label>
@@ -128,7 +127,6 @@ export function PatientBasicInfo({ handleChangeStep }: Props) {
               name="rg"
               type="text"
               placeholder="Digite"
-              required
               value={formik.values.rg}
               onChange={formik.handleChange}
             />
@@ -159,7 +157,6 @@ export function PatientBasicInfo({ handleChangeStep }: Props) {
               name="email"
               type="email"
               placeholder="Digite"
-              required
               value={formik.values.email}
               onChange={formik.handleChange}
             />

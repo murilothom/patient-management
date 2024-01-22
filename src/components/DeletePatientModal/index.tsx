@@ -47,7 +47,7 @@ export function DeletePatientModal() {
   };
 
   return (
-    <DialogContainer open={isDeleteModalOpen} onClose={onClose}>
+    <DialogContainer open={isDeleteModalOpen} onClose={() => {}}>
       <DialogWrapper>
         <DialogPanel>
           <Header>
