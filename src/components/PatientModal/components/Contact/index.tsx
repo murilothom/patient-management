@@ -1,5 +1,5 @@
 import { FormikContextType, useFormikContext } from 'formik';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useContextSelector } from 'use-context-selector';
 import toast from 'react-hot-toast';
 import { Form } from './styles';
@@ -15,23 +15,21 @@ export function Contact() {
     PatientsContext,
     (context) => context,
   );
-  const [isFetchingAddressData, setIsFetchingAddressData] = useState(false);
   const formik: FormikContextType<PatientSchema> = useFormikContext();
+  const [isFetchingAddressData, setIsFetchingAddressData] = useState(false);
+  const postalCode = useMemo(() => formik.values.contact.postalCode, [formik.values.contact.postalCode])
 
-  const {
-    maskedValue: maskedPostalCode,
-    cleanedValue: cleanedPostalCode,
-  } = useMask('postalCode', formik.values.contact.postalCode);
+  const { maskedValue: maskedPostalCode } = useMask('postalCode', formik.values.contact.postalCode);
 
-  const fetchAddress = async () => {
+  const fetchAddress = useCallback(async () => {
     try {
       setIsFetchingAddressData(true);
-      const address = await cepService.get(cleanedPostalCode);
+      const address = await cepService.get(postalCode);
       formik.setFieldValue('contact.city', address.localidade);
       formik.setFieldValue('contact.uf', address.uf);
       formik.setFieldValue('contact.address', address.logradouro);
       formik.setFieldValue('contact.neighborhood', address.bairro);
-      if (currentPatient?.contact?.postalCode !== formik.values.contact.postalCode) {
+      if (currentPatient?.contact?.postalCode !== postalCode) {
         formik.setFieldValue('contact.number', '');
         formik.setFieldValue('contact.complement', '');
       } else {
@@ -43,10 +41,10 @@ export function Contact() {
     } finally {
       setIsFetchingAddressData(false);
     }
-  };
+  }, [postalCode]);
 
   useEffect(() => {
-    const isValidPostalCode = cleanedPostalCode.length >= 5;
+    const isValidPostalCode = !!postalCode && postalCode.length === 8;
     if (!isValidPostalCode) {
       return;
     }
@@ -57,7 +55,7 @@ export function Contact() {
     return () => {
       clearTimeout(timeout);
     };
-  }, [formik.values.contact.postalCode]);
+  }, [postalCode]);
 
   return (
     <Form onSubmit={formik.handleSubmit}>
