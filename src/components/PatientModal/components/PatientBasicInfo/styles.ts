@@ -63,7 +63,7 @@ export const ButtonWrapper = styled.footer`
   display: flex;
   justify-content: flex-end;
   align-items: flex-end;
-  margin-top: 3.4375rem;
+  margin-top: 2.4375rem;
 
   button[type="submit"] {
     background-color: ${({ theme }) => theme.blue};

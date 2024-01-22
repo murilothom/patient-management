@@ -54,6 +54,11 @@ export const Form = styled.form`
       &:hover {
         filter: brightness(0.95);
       }
+
+      &:disabled {
+        background-color:  ${({ theme }) => theme['gray-400']};
+        cursor: progress;
+      }
     }
   }
 `;

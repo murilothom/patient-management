@@ -125,6 +125,7 @@ export function Contact() {
             value={formik.values.contact.address}
             onBlur={formik.handleBlur}
             onChange={formik.handleChange}
+            disabled={formik.isSubmitting || isFetchingAddressData}
             $error={!!formik.touched?.contact?.address && !!formik.errors?.contact?.address}
           />
           {formik.touched?.contact?.address && formik.errors?.contact?.address && (
