@@ -18,6 +18,7 @@ import { Contact } from './components/Contact';
 import { getInitialValues } from '../../lib/formik/Patient/initialValues';
 import { PatientSchema, patientSchema } from '../../lib/formik/Patient/validationSchema';
 import patientsService from '../../api/patientsService';
+import { AxiosError } from 'axios';
 
 enum Step {
   INFO = 1,
@@ -61,7 +62,16 @@ export function PatientModal() {
       fetchPatients();
       setCurrentPatient(null);
       handleClosePatientModal();
-    } catch (error) {
+    } catch (err) {
+      const error = err as AxiosError<{ message: string }>
+      if (error.response?.data?.message === 'Patient already created') {
+        toast.error('E-mail, CPF ou RG já cadastrados.');
+        return;
+      }
+      if (error.response?.data?.message === 'Invalid CPF') {
+        toast.error('CPF inválido.');
+        return;
+      }
       toast.error('Ocorreu um erro ao tentar salvar os dados do paciente.');
     }
   };
