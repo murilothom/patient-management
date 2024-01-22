@@ -1,5 +1,5 @@
 import { Params } from '../contexts/patients-context';
-import { PatientSchema } from '../lib/formik/patient/validation-schema';
+import { PatientSchema } from '../lib/formik/Patient/validation-schema';
 import { Patient } from '../types/patient';
 import { Service } from './service';
 

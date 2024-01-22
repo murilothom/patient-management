@@ -11,9 +11,9 @@ import {
 import userImg from '../../../../assets/image-user.png';
 import { PatientsContext } from '../../../../contexts/patients-context';
 import 'react-datepicker/dist/react-datepicker.css';
-import { PatientSchema } from '../../../../lib/formik/patient/validation-schema';
 import { useMask } from '../../../../hooks/useMask';
 import { ErrorMessage } from '../ErrorMessage';
+import { PatientSchema } from '../../../../lib/formik/Patient/validation-schema';
 
 registerLocale('ptBR', ptBR);
 
@@ -218,7 +218,9 @@ export function PatientBasicInfo({ handleChangeStep }: Props) {
             value={formik.values.additionalObservations}
             onBlur={formik.handleBlur}
             onChange={formik.handleChange}
-            $error={!!formik.touched?.additionalObservations && !!formik.errors?.additionalObservations}
+            $error={
+              !!formik.touched?.additionalObservations && !!formik.errors?.additionalObservations
+            }
           />
           {formik.touched?.additionalObservations && formik.errors?.additionalObservations && (
             <ErrorMessage message={formik.errors.additionalObservations} />

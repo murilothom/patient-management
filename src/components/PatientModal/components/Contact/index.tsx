@@ -5,11 +5,11 @@ import {
 import { useContextSelector } from 'use-context-selector';
 import toast from 'react-hot-toast';
 import { Form, Input } from './styles';
-import { PatientSchema } from '../../../../lib/formik/patient/validation-schema';
 import cepService from '../../../../services/cep-service';
 import { PatientsContext } from '../../../../contexts/patients-context';
 import { useMask } from '../../../../hooks/useMask';
 import { ErrorMessage } from '../ErrorMessage';
+import { PatientSchema } from '../../../../lib/formik/Patient/validation-schema';
 
 export function Contact() {
   const {
@@ -20,7 +20,10 @@ export function Contact() {
   );
   const formik: FormikContextType<PatientSchema> = useFormikContext();
   const [isFetchingAddressData, setIsFetchingAddressData] = useState(false);
-  const postalCode = useMemo(() => formik.values.contact.postalCode, [formik.values.contact.postalCode]);
+  const postalCode = useMemo(
+    () => formik.values.contact.postalCode,
+    [formik.values.contact.postalCode],
+  );
 
   const { maskedValue: maskedPostalCode } = useMask('postalCode', formik.values.contact.postalCode);
 
@@ -176,7 +179,9 @@ export function Contact() {
             onBlur={formik.handleBlur}
             onChange={formik.handleChange}
             disabled={formik.isSubmitting || isFetchingAddressData}
-            $error={!!formik.touched?.contact?.neighborhood && !!formik.errors?.contact?.neighborhood}
+            $error={
+              !!formik.touched?.contact?.neighborhood && !!formik.errors?.contact?.neighborhood
+            }
           />
           {formik.touched?.contact?.complement && formik.errors?.contact?.complement && (
             <ErrorMessage message={formik.errors.contact.complement} />

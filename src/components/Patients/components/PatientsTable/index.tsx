@@ -2,8 +2,8 @@ import { ArrowsDownUp } from 'phosphor-react';
 import { useContextSelector } from 'use-context-selector';
 import { Patient } from '../../../../types/patient';
 import { PatientsTableContainer, TableHead } from './styles';
-import { PatientDetail } from '../patient';
 import { PatientsContext } from '../../../../contexts/patients-context';
+import { PatientDetail } from '../Patient';
 
 interface Props {
   patients: Patient[]

@@ -15,10 +15,10 @@ import {
 import { ModalContext } from '../../contexts/modal-context';
 import { PatientsContext } from '../../contexts/patients-context';
 import { PatientBasicInfo } from './components/PatientBasicInfo';
-import { Contact } from './components/contact';
-import { getInitialValues } from '../../lib/formik/patient/initial-values';
-import { PatientSchema, patientSchema } from '../../lib/formik/patient/validation-schema';
 import patientsService from '../../services/patients-service';
+import { PatientSchema, patientSchema } from '../../lib/formik/Patient/validation-schema';
+import { Contact } from './components/Contact';
+import { getInitialValues } from '../../lib/formik/Patient/initial-values';
 
 enum Step {
   INFO = 1,
