@@ -1,11 +1,13 @@
 import { FormikContextType, useFormikContext } from 'formik';
-import { FormEvent, useCallback, useEffect, useMemo, useState } from 'react';
+import {
+  FormEvent, useCallback, useEffect, useMemo, useState,
+} from 'react';
 import { useContextSelector } from 'use-context-selector';
 import toast from 'react-hot-toast';
 import { Form, Input } from './styles';
-import { PatientSchema } from '../../../../lib/formik/Patient/validationSchema';
-import cepService from '../../../../api/cepService';
-import { PatientsContext } from '../../../../contexts/PatientsContext';
+import { PatientSchema } from '../../../../lib/formik/patient/validation-schema';
+import cepService from '../../../../services/cep-service';
+import { PatientsContext } from '../../../../contexts/patients-context';
 import { useMask } from '../../../../hooks/useMask';
 import { ErrorMessage } from '../ErrorMessage';
 
@@ -76,7 +78,7 @@ export function Contact() {
             placeholder="Digite"
             value={maskedPostalCode}
             onBlur={formik.handleBlur}
-            onChange={e => formik.setFieldValue('contact.postalCode', e.target.value.replace(/\D/g, ''))}
+            onChange={(e) => formik.setFieldValue('contact.postalCode', e.target.value.replace(/\D/g, ''))}
             disabled={formik.isSubmitting || isFetchingAddressData}
             $error={!!formik.touched?.contact?.postalCode && !!formik.errors?.contact?.postalCode}
           />

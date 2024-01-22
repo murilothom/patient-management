@@ -13,8 +13,8 @@ import {
   DeleteButton,
 } from './styles';
 import deletePatientImg from '../../assets/delete-patient-image.png';
-import { ModalContext } from '../../contexts/ModalContext';
-import { PatientsContext } from '../../contexts/PatientsContext';
+import { ModalContext } from '../../contexts/modal-context';
+import { PatientsContext } from '../../contexts/patients-context';
 
 export function DeletePatientModal() {
   const {

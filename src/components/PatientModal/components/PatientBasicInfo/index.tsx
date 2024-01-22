@@ -5,11 +5,13 @@ import { ptBR } from 'date-fns/locale';
 import { Calendar } from 'phosphor-react';
 import { parseISO } from 'date-fns';
 import { FormikContextType, useFormikContext } from 'formik';
-import { ButtonWrapper, Form, Input, Select, Textarea, DatePicker } from './styles';
+import {
+  ButtonWrapper, Form, Input, Select, Textarea, DatePicker,
+} from './styles';
 import userImg from '../../../../assets/image-user.png';
-import { PatientsContext } from '../../../../contexts/PatientsContext';
+import { PatientsContext } from '../../../../contexts/patients-context';
 import 'react-datepicker/dist/react-datepicker.css';
-import { PatientSchema } from '../../../../lib/formik/Patient/validationSchema';
+import { PatientSchema } from '../../../../lib/formik/patient/validation-schema';
 import { useMask } from '../../../../hooks/useMask';
 import { ErrorMessage } from '../ErrorMessage';
 
@@ -139,7 +141,7 @@ export function PatientBasicInfo({ handleChangeStep }: Props) {
               placeholder="Digite"
               value={maskedDocument}
               onBlur={formik.handleBlur}
-              onChange={e => formik.setFieldValue('document', e.target.value.replace(/\D/g, ''))}
+              onChange={(e) => formik.setFieldValue('document', e.target.value.replace(/\D/g, ''))}
               $error={!!formik.touched?.document && !!formik.errors?.document}
             />
             {formik.touched?.document && formik.errors?.document && (

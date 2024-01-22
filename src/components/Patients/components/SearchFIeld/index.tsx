@@ -4,7 +4,7 @@ import {
 } from 'react';
 import { useContextSelector } from 'use-context-selector';
 import { useDebounce } from 'use-debounce';
-import { PatientsContext } from '../../../../contexts/PatientsContext';
+import { PatientsContext } from '../../../../contexts/patients-context';
 import { SearchFieldContainer } from './styles';
 
 export function SearchField() {

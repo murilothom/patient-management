@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { postalCode } from './zipcode';
+import { postalCode } from './postal-code';
 import { cpf } from './cpf';
 
 export interface Mask {

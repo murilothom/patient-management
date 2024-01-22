@@ -1,4 +1,4 @@
-export interface CEPResponse {
+export interface ViaCepResponse {
   bairro: string,
   cep: string,
   complement: string,

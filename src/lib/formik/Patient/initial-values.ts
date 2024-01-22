@@ -1,4 +1,4 @@
-import { Patient } from '../../../types/Patient';
+import { Patient } from '../../../types/patient';
 
 export const getInitialValues = (patient: Patient | null) => ({
   _id: patient?._id ?? undefined,

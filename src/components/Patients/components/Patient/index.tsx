@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { DotsThree } from 'phosphor-react';
 import { useContextSelector } from 'use-context-selector';
-import { Patient } from '../../../../types/Patient';
-import { dateFormatter } from '../../../../utils/formatter';
+import { Patient } from '../../../../types/patient';
 import { ActionsButtonsWrapper, PatientInfo } from './styles';
-import { ModalContext } from '../../../../contexts/ModalContext';
-import { PatientsContext } from '../../../../contexts/PatientsContext';
+import { ModalContext } from '../../../../contexts/modal-context';
+import { PatientsContext } from '../../../../contexts/patients-context';
 import { useMask } from '../../../../hooks/useMask';
+import { dateFormatter } from '../../../../utils/formatters/date-formatter';
 
 interface Props {
   patient: Patient

@@ -1,4 +1,4 @@
-import { CEPResponse } from '../types/CEPResponse';
+import { ViaCepResponse } from '../types/via-cep-response';
 import { Service } from './service';
 
 const baseURL = 'https://viacep.com.br/ws';
@@ -6,7 +6,7 @@ const baseURL = 'https://viacep.com.br/ws';
 export class CepService {
   constructor(private service: Service) {}
 
-  public get = async (cep: string): Promise<CEPResponse> => this.service.get(`${baseURL}/${cep}/json`).then((x) => x.data);
+  public get = async (cep: string): Promise<ViaCepResponse> => this.service.get(`${baseURL}/${cep}/json`).then((x) => x.data);
 }
 
 const service = new Service();

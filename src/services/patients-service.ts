@@ -1,6 +1,6 @@
-import { Params } from '../contexts/PatientsContext';
-import { PatientSchema } from '../lib/formik/Patient/validationSchema';
-import { Patient } from '../types/Patient';
+import { Params } from '../contexts/patients-context';
+import { PatientSchema } from '../lib/formik/patient/validation-schema';
+import { Patient } from '../types/patient';
 import { Service } from './service';
 
 const baseURL = 'https://patient-management-api-5mh6.onrender.com/patient'; /* URL Caso API NÃO estiver sendo executada localmente */

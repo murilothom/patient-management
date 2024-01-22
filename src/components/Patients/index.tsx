@@ -9,9 +9,9 @@ import {
 import { SearchField } from './components/SearchFIeld';
 import { PatientsTable } from './components/PatientsTable';
 import { DeletePatientModal } from '../DeletePatientModal';
-import { PatientsContext } from '../../contexts/PatientsContext';
+import { PatientsContext } from '../../contexts/patients-context';
 import { PatientModal } from '../PatientModal';
-import { ModalContext } from '../../contexts/ModalContext';
+import { ModalContext } from '../../contexts/modal-context';
 
 export function Patients() {
   const {

@@ -2,9 +2,9 @@ import {
   ReactNode, useCallback, useEffect, useMemo, useState,
 } from 'react';
 import { createContext } from 'use-context-selector';
-import { Patient } from '../types/Patient';
-import patientsService from '../api/patientsService';
 import toast from 'react-hot-toast';
+import { Patient } from '../types/patient';
+import patientsService from '../services/patients-service';
 
 export interface Params {
   sort: string

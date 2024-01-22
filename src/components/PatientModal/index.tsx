@@ -3,6 +3,7 @@ import { X } from 'phosphor-react';
 import { useContextSelector } from 'use-context-selector';
 import { Formik } from 'formik';
 import toast from 'react-hot-toast';
+import { AxiosError } from 'axios';
 import {
   CloseButton,
   DialogContainer,
@@ -11,14 +12,13 @@ import {
   NavBar,
   NavBarButton,
 } from './styles';
-import { ModalContext } from '../../contexts/ModalContext';
-import { PatientsContext } from '../../contexts/PatientsContext';
+import { ModalContext } from '../../contexts/modal-context';
+import { PatientsContext } from '../../contexts/patients-context';
 import { PatientBasicInfo } from './components/PatientBasicInfo';
-import { Contact } from './components/Contact';
-import { getInitialValues } from '../../lib/formik/Patient/initialValues';
-import { PatientSchema, patientSchema } from '../../lib/formik/Patient/validationSchema';
-import patientsService from '../../api/patientsService';
-import { AxiosError } from 'axios';
+import { Contact } from './components/contact';
+import { getInitialValues } from '../../lib/formik/patient/initial-values';
+import { PatientSchema, patientSchema } from '../../lib/formik/patient/validation-schema';
+import patientsService from '../../services/patients-service';
 
 enum Step {
   INFO = 1,
@@ -63,7 +63,7 @@ export function PatientModal() {
       setCurrentPatient(null);
       handleClosePatientModal();
     } catch (err) {
-      const error = err as AxiosError<{ message: string }>
+      const error = err as AxiosError<{ message: string }>;
       if (error.response?.data?.message === 'Patient already created') {
         toast.error('E-mail, CPF ou RG já cadastrados.');
         return;

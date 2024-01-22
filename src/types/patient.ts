@@ -1,4 +1,4 @@
-import { Contact } from './Contact';
+import { Contact } from './contact';
 
 export interface Patient {
   _id: string,
