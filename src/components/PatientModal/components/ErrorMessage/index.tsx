@@ -1,4 +1,4 @@
-import { Message } from "./styles";
+import { Message } from './styles';
 
 interface Props {
   message: string

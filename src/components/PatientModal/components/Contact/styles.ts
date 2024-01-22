@@ -68,7 +68,7 @@ interface InputProps {
 }
 
 export const Input = styled.input<InputProps>`
-  border: 1px solid ${({ theme, $error }) => $error ? theme.red : theme['gray-200']};
+  border: 1px solid ${({ theme, $error }) => ($error ? theme.red : theme['gray-200'])};
 
   ${({ $error }) => $error && css`
       &:focus {

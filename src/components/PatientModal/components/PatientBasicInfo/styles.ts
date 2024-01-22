@@ -54,7 +54,7 @@ interface InputProps {
 export const Select = styled(Dropdown)<InputProps>`
   height: 2rem;
   border-radius: 5px;
-  border: 1px solid ${({ theme, $error }) => $error ? theme.red : theme['gray-200']};
+  border: 1px solid ${({ theme, $error }) => ($error ? theme.red : theme['gray-200'])};
   padding: 0.1875rem 0.9375rem;
 `;
 
@@ -83,7 +83,7 @@ export const ButtonWrapper = styled.footer`
 `;
 
 export const Input = styled.input<InputProps>`
-  border: 1px solid ${({ theme, $error }) => $error ? theme.red : theme['gray-200']};
+  border: 1px solid ${({ theme, $error }) => ($error ? theme.red : theme['gray-200'])};
 
   ${({ $error }) => $error && css`
       &:focus {
@@ -94,7 +94,7 @@ export const Input = styled.input<InputProps>`
 `;
 
 export const Textarea = styled.textarea<InputProps>`
-  border: 1px solid ${({ theme, $error }) => $error ? theme.red : theme['gray-200']};
+  border: 1px solid ${({ theme, $error }) => ($error ? theme.red : theme['gray-200'])};
 
   ${({ $error }) => $error && css`
       &:focus {
@@ -105,7 +105,7 @@ export const Textarea = styled.textarea<InputProps>`
 `;
 
 export const DatePicker = styled(Date)<InputProps>`
-  border: 1px solid ${({ theme, $error }) => $error ? theme.red : theme['gray-200']};
+  border: 1px solid ${({ theme, $error }) => ($error ? theme.red : theme['gray-200'])};
 
   ${({ $error }) => $error && css`
       &:focus {
