@@ -1,5 +1,6 @@
 import { Dropdown } from 'primereact/dropdown';
-import { styled } from 'styled-components';
+import { css, styled } from 'styled-components';
+import Date from 'react-datepicker';
 
 export const Form = styled.form`
   display: flex;
@@ -23,12 +24,12 @@ export const Form = styled.form`
     color: ${({ theme }) => theme['gray-400']};
     font-size: 0.875rem;
     width: 14.35375rem;
+    position: relative;
   }
 
   input, textarea {
     padding: 0.3125rem 0.9375rem;
     border-radius: 5px;
-    border: 1px solid ${({ theme }) => theme['gray-200']};
     color: ${({ theme }) => theme['gray-500']};
     font-size: 0.875rem;
     width: 100%;
@@ -46,10 +47,14 @@ export const Form = styled.form`
   }
 `;
 
-export const Select = styled(Dropdown)`
+interface InputProps {
+  $error: boolean;
+}
+
+export const Select = styled(Dropdown)<InputProps>`
   height: 2rem;
   border-radius: 5px;
-  border: 1px solid ${({ theme }) => theme['gray-200']};
+  border: 1px solid ${({ theme, $error }) => $error ? theme.red : theme['gray-200']};
   padding: 0.1875rem 0.9375rem;
 `;
 
@@ -75,4 +80,37 @@ export const ButtonWrapper = styled.footer`
       filter: brightness(0.95);
     }
   }
+`;
+
+export const Input = styled.input<InputProps>`
+  border: 1px solid ${({ theme, $error }) => $error ? theme.red : theme['gray-200']};
+
+  ${({ $error }) => $error && css`
+      &:focus {
+        box-shadow: 0 0 0 2px ${({ theme }) => theme.red};
+        border: none;
+      }
+  `}
+`;
+
+export const Textarea = styled.textarea<InputProps>`
+  border: 1px solid ${({ theme, $error }) => $error ? theme.red : theme['gray-200']};
+
+  ${({ $error }) => $error && css`
+      &:focus {
+        box-shadow: 0 0 0 2px ${({ theme }) => theme.red};
+        border: none;
+      }
+  `}
+`;
+
+export const DatePicker = styled(Date)<InputProps>`
+  border: 1px solid ${({ theme, $error }) => $error ? theme.red : theme['gray-200']};
+
+  ${({ $error }) => $error && css`
+      &:focus {
+        box-shadow: 0 0 0 2px ${({ theme }) => theme.red};
+        border: none;
+      }
+  `}
 `;

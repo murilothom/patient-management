@@ -1,12 +1,13 @@
 import { FormikContextType, useFormikContext } from 'formik';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { FormEvent, useCallback, useEffect, useMemo, useState } from 'react';
 import { useContextSelector } from 'use-context-selector';
 import toast from 'react-hot-toast';
-import { Form } from './styles';
+import { Form, Input } from './styles';
 import { PatientSchema } from '../../../../lib/formik/Patient/validationSchema';
 import cepService from '../../../../api/cepService';
 import { PatientsContext } from '../../../../contexts/PatientsContext';
 import { useMask } from '../../../../hooks/useMask';
+import { ErrorMessage } from '../ErrorMessage';
 
 export function Contact() {
   const {
@@ -17,7 +18,7 @@ export function Contact() {
   );
   const formik: FormikContextType<PatientSchema> = useFormikContext();
   const [isFetchingAddressData, setIsFetchingAddressData] = useState(false);
-  const postalCode = useMemo(() => formik.values.contact.postalCode, [formik.values.contact.postalCode])
+  const postalCode = useMemo(() => formik.values.contact.postalCode, [formik.values.contact.postalCode]);
 
   const { maskedValue: maskedPostalCode } = useMask('postalCode', formik.values.contact.postalCode);
 
@@ -43,6 +44,13 @@ export function Contact() {
     }
   }, [postalCode]);
 
+  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    if (Object.keys(formik.errors).length) {
+      toast.error('Por favor, verifique todos os campos antes de enviar o formulário.');
+    }
+    formik.handleSubmit(e);
+  };
+
   useEffect(() => {
     const isValidPostalCode = !!postalCode && postalCode.length === 8;
     if (!isValidPostalCode) {
@@ -58,83 +66,118 @@ export function Contact() {
   }, [postalCode]);
 
   return (
-    <Form onSubmit={formik.handleSubmit}>
+    <Form onSubmit={onSubmit}>
       <div>
         <label>
           CEP:
-          <input
+          <Input
             name="contact.postalCode"
             type="text"
             placeholder="Digite"
             value={maskedPostalCode}
+            onBlur={formik.handleBlur}
             onChange={e => formik.setFieldValue('contact.postalCode', e.target.value.replace(/\D/g, ''))}
             disabled={formik.isSubmitting || isFetchingAddressData}
+            $error={!!formik.touched?.contact?.postalCode && !!formik.errors?.contact?.postalCode}
           />
+          {formik.touched?.contact?.postalCode && formik.errors?.contact?.postalCode && (
+            <ErrorMessage message={formik.errors.contact.postalCode} />
+          )}
         </label>
         <label>
           Cidade:
-          <input
+          <Input
             name="contact.city"
             type="text"
             placeholder="Digite"
             value={formik.values.contact.city}
+            onBlur={formik.handleBlur}
             onChange={formik.handleChange}
             disabled={formik.isSubmitting || isFetchingAddressData}
+            $error={!!formik.touched?.contact?.city && !!formik.errors?.contact?.city}
           />
+          {formik.touched?.contact?.city && formik.errors?.contact?.city && (
+            <ErrorMessage message={formik.errors.contact.city} />
+          )}
         </label>
         <label>
           UF:
-          <input
+          <Input
             name="contact.uf"
             type="text"
             placeholder="Digite"
             value={formik.values.contact.uf}
+            onBlur={formik.handleBlur}
             onChange={formik.handleChange}
             disabled={formik.isSubmitting || isFetchingAddressData}
+            $error={!!formik.touched?.contact?.uf && !!formik.errors?.contact?.uf}
           />
+          {formik.touched?.contact?.uf && formik.errors?.contact?.uf && (
+            <ErrorMessage message={formik.errors.contact.uf} />
+          )}
         </label>
         <label>
           Endereço:
-          <input
+          <Input
             name="contact.address"
             type="text"
             placeholder="Digite"
             value={formik.values.contact.address}
+            onBlur={formik.handleBlur}
             onChange={formik.handleChange}
+            $error={!!formik.touched?.contact?.address && !!formik.errors?.contact?.address}
           />
+          {formik.touched?.contact?.address && formik.errors?.contact?.address && (
+            <ErrorMessage message={formik.errors.contact.address} />
+          )}
         </label>
         <label>
           Número:
-          <input
+          <Input
             name="contact.number"
             type="text"
             placeholder="Digite"
             value={formik.values.contact.number}
+            onBlur={formik.handleBlur}
             onChange={formik.handleChange}
             disabled={formik.isSubmitting || isFetchingAddressData}
+            $error={!!formik.touched?.contact?.address && !!formik.errors?.contact?.address}
           />
+          {formik.touched?.contact?.number && formik.errors?.contact?.number && (
+            <ErrorMessage message={formik.errors.contact.number} />
+          )}
         </label>
         <label>
           Bairro:
-          <input
+          <Input
             name="contact.neighborhood"
             type="text"
             placeholder="Digite"
             value={formik.values.contact.neighborhood}
+            onBlur={formik.handleBlur}
             onChange={formik.handleChange}
             disabled={formik.isSubmitting || isFetchingAddressData}
+            $error={!!formik.touched?.contact?.number && !!formik.errors?.contact?.number}
           />
+          {formik.touched?.contact?.neighborhood && formik.errors?.contact?.neighborhood && (
+            <ErrorMessage message={formik.errors.contact.neighborhood} />
+          )}
         </label>
         <label>
           Complemento:
-          <input
+          <Input
             name="contact.complement"
             type="text"
             placeholder="Digite"
             value={formik.values.contact.complement}
+            onBlur={formik.handleBlur}
             onChange={formik.handleChange}
             disabled={formik.isSubmitting || isFetchingAddressData}
+            $error={!!formik.touched?.contact?.neighborhood && !!formik.errors?.contact?.neighborhood}
           />
+          {formik.touched?.contact?.complement && formik.errors?.contact?.complement && (
+            <ErrorMessage message={formik.errors.contact.complement} />
+          )}
         </label>
       </div>
       <footer>

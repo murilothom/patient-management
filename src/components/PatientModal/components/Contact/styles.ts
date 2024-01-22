@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const Form = styled.form`
   height: 100%;
@@ -17,12 +17,12 @@ export const Form = styled.form`
       color: ${({ theme }) => theme['gray-400']};
       font-size: 0.875rem;
       width: 14.35375rem;
+      position: relative;
     }
 
     input {
       padding: 0.3125rem 0.9375rem;
       border-radius: 5px;
-      border: 1px solid ${({ theme }) => theme['gray-200']};
       color: ${({ theme }) => theme['gray-500']};
       font-size: 0.875rem;
       width: 100%;
@@ -56,4 +56,19 @@ export const Form = styled.form`
       }
     }
   }
+`;
+
+interface InputProps {
+  $error: boolean;
+}
+
+export const Input = styled.input<InputProps>`
+  border: 1px solid ${({ theme, $error }) => $error ? theme.red : theme['gray-200']};
+
+  ${({ $error }) => $error && css`
+      &:focus {
+        box-shadow: 0 0 0 2px ${({ theme }) => theme.red};
+        border: none;
+      }
+  `}
 `;
