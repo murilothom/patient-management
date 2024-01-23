@@ -4,6 +4,7 @@ import { useContextSelector } from 'use-context-selector';
 import { Formik } from 'formik';
 import toast from 'react-hot-toast';
 import { AxiosError } from 'axios';
+import { ImageType } from 'react-images-uploading';
 import {
   CloseButton,
   DialogContainer,
@@ -27,6 +28,7 @@ enum Step {
 
 export function PatientModal() {
   const [step, setStep] = useState<Step>(Step.INFO);
+  const [image, setImage] = useState<ImageType | null>(null);
 
   const handleChangeStep = (nextStep: Step) => {
     setStep(nextStep);
@@ -54,9 +56,19 @@ export function PatientModal() {
     handleClosePatientModal();
   };
 
+  const updatePatientImage = (value: ImageType | null) => {
+    setImage(value);
+  };
+
   const onSubmit = async (model: PatientSchema) => {
     try {
-      await patientsService.save(model);
+      const patient = await patientsService.save(model);
+      if (image?.file) {
+        await patientsService.uploadImage(patient._id, image.file);
+      }
+      if (currentPatient?.picture && !image?.file) {
+        await patientsService.deleteImage(patient._id);
+      }
       toast.success('Paciente salvo com sucesso.');
       handleChangeStep(Step.INFO);
       fetchPatients();
@@ -105,7 +117,10 @@ export function PatientModal() {
               </NavBarButton>
             </NavBar>
             {step === Step.INFO && (
-            <PatientBasicInfo handleChangeStep={handleChangeStep} />
+              <PatientBasicInfo
+                handleChangeStep={handleChangeStep}
+                updatePatientImage={updatePatientImage}
+              />
             )}
             {step === Step.CONTACT && (<Contact />)}
           </DialogPanel>

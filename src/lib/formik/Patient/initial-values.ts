@@ -1,6 +1,7 @@
 import { Patient } from '../../../types/patient';
+import { PatientSchema } from './validation-schema';
 
-export const getInitialValues = (patient: Patient | null) => ({
+export const getInitialValues = (patient: Patient | null): PatientSchema => ({
   _id: patient?._id ?? undefined,
   name: patient?.name ?? '',
   nickname: patient?.nickname ?? '',

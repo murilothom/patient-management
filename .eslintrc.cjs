@@ -23,7 +23,8 @@ module.exports = {
     'no-underscore-dangle': 'off',
     'react/jsx-props-no-spreading': 'off',
     'jsx-a11y/label-has-associated-control': 'off',
-    'consistent-return': 'off'
+    'consistent-return': 'off',
+    'arrow-body-style': 'off'
   },
   ignorePatterns: [".eslintrc.cjs", "vite.config.ts"]
 }

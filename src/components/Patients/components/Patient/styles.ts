@@ -22,6 +22,11 @@ export const PatientInfo = styled.td`
 
   &:first-child {
     color: ${({ theme }) => theme.blue};
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
   }
 `;
 

@@ -31,17 +31,13 @@ export function Contact() {
     try {
       setIsFetchingAddressData(true);
       const address = await cepService.get(postalCode);
+      formik.setFieldValue('contact.cep', address.cep);
       formik.setFieldValue('contact.city', address.localidade);
       formik.setFieldValue('contact.uf', address.uf);
       formik.setFieldValue('contact.address', address.logradouro);
       formik.setFieldValue('contact.neighborhood', address.bairro);
-      if (currentPatient?.contact?.postalCode !== postalCode) {
-        formik.setFieldValue('contact.number', '');
-        formik.setFieldValue('contact.complement', '');
-      } else {
-        formik.setFieldValue('contact.number', currentPatient.contact.number);
-        formik.setFieldValue('contact.complement', currentPatient.contact.complement);
-      }
+      formik.setFieldValue('contact.number', currentPatient?.contact.number || '');
+      formik.setFieldValue('contact.complement', currentPatient?.contact.complement || '');
     } catch (error) {
       toast.error('Verifique o CEP inserido.');
     } finally {
@@ -147,7 +143,7 @@ export function Contact() {
             onBlur={formik.handleBlur}
             onChange={formik.handleChange}
             disabled={formik.isSubmitting || isFetchingAddressData}
-            $error={!!formik.touched?.contact?.address && !!formik.errors?.contact?.address}
+            $error={!!formik.touched?.contact?.number && !!formik.errors?.contact?.number}
           />
           {formik.touched?.contact?.number && formik.errors?.contact?.number && (
             <ErrorMessage message={formik.errors.contact.number} />
@@ -163,7 +159,9 @@ export function Contact() {
             onBlur={formik.handleBlur}
             onChange={formik.handleChange}
             disabled={formik.isSubmitting || isFetchingAddressData}
-            $error={!!formik.touched?.contact?.number && !!formik.errors?.contact?.number}
+            $error={
+              !!formik.touched?.contact?.neighborhood && !!formik.errors?.contact?.neighborhood
+            }
           />
           {formik.touched?.contact?.neighborhood && formik.errors?.contact?.neighborhood && (
             <ErrorMessage message={formik.errors.contact.neighborhood} />
@@ -180,7 +178,7 @@ export function Contact() {
             onChange={formik.handleChange}
             disabled={formik.isSubmitting || isFetchingAddressData}
             $error={
-              !!formik.touched?.contact?.neighborhood && !!formik.errors?.contact?.neighborhood
+              !!formik.touched?.contact?.complement && !!formik.errors?.contact?.complement
             }
           />
           {formik.touched?.contact?.complement && formik.errors?.contact?.complement && (

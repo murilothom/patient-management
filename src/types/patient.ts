@@ -1,4 +1,5 @@
 import { Contact } from './contact';
+import { Picture } from './picture';
 
 export interface Patient {
   _id: string,
@@ -13,6 +14,7 @@ export interface Patient {
   maritalStatus: string,
   additionalObservations?: string,
   contact: Contact,
+  picture?: Picture | null
   createdAt: Date,
   updatedAt: Date,
 }

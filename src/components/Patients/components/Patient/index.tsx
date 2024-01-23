@@ -38,7 +38,7 @@ export function PatientDetail({ patient }: Props) {
 
   return (
     <tr>
-      <PatientInfo>
+      <PatientInfo onClick={openPatientModal}>
         <span>{patient.name}</span>
       </PatientInfo>
       <PatientInfo>

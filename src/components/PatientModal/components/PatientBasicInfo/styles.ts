@@ -114,3 +114,38 @@ export const DatePicker = styled(Date)<InputProps>`
       }
   `}
 `;
+
+export const UploadButton = styled.button`
+  background-color: transparent;
+  cursor: pointer;
+  border: none;
+`;
+
+export const PatientImage = styled.img`
+  width: 7.8125rem;
+  height: 7.8125rem;
+  border-radius: 50%;
+  object-fit: contain;
+
+  &:hover {
+    filter: brightness(0.90);
+  }
+`;
+
+export const RemoveImageButton = styled.button`
+  position: relative;
+  width: 1.875rem;
+  height: 1.875rem;
+  border-radius: 50%;
+  background-color: ${({ theme }) => theme['gray-300']};
+  line-height: 0;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  bottom: 4px;
+  left: -34px;
+
+  &:hover {
+    filter: brightness(0.90);
+  }
+`;

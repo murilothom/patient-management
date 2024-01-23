@@ -2,11 +2,21 @@ import { useContextSelector } from 'use-context-selector';
 import { useEffect, useState } from 'react';
 import { registerLocale } from 'react-datepicker';
 import { ptBR } from 'date-fns/locale';
-import { Calendar } from 'phosphor-react';
+import { Calendar, Trash } from 'phosphor-react';
 import { parseISO } from 'date-fns';
 import { FormikContextType, useFormikContext } from 'formik';
+import ReactImageUploading, { ImageListType, ImageType } from 'react-images-uploading';
+import toast from 'react-hot-toast';
 import {
-  ButtonWrapper, Form, Input, Select, Textarea, DatePicker,
+  ButtonWrapper,
+  Form,
+  Input,
+  Select,
+  Textarea,
+  DatePicker,
+  PatientImage,
+  UploadButton,
+  RemoveImageButton,
 } from './styles';
 import userImg from '../../../../assets/image-user.png';
 import { PatientsContext } from '../../../../contexts/patients-context';
@@ -38,9 +48,10 @@ enum Step {
 
 interface Props {
   handleChangeStep: (step: Step) => void
+  updatePatientImage: (image: ImageType | null) => void
 }
 
-export function PatientBasicInfo({ handleChangeStep }: Props) {
+export function PatientBasicInfo({ handleChangeStep, updatePatientImage }: Props) {
   const {
     currentPatient,
   } = useContextSelector(
@@ -50,6 +61,7 @@ export function PatientBasicInfo({ handleChangeStep }: Props) {
   const [dateOfBirth, setDateOfBirth] = useState<Date | null>(
     currentPatient ? parseISO(currentPatient.dateOfBirth.toString()) : null,
   );
+  const [patientImage, setPatientImage] = useState('');
 
   const formik: FormikContextType<PatientSchema> = useFormikContext();
 
@@ -59,15 +71,70 @@ export function PatientBasicInfo({ handleChangeStep }: Props) {
     handleChangeStep(Step.CONTACT);
   };
 
+  const handleImageUpload = async (value: ImageListType) => {
+    const [image] = value;
+    if (image?.file && image.file.size > 100000) {
+      toast.error('A imagem excedeu o tamanho máximo permitido (100 KB). Por favor, escolha uma imagem menor.');
+      return;
+    }
+    if (!image.file?.type.match(/^(image\/jpeg|image\/png)$/)) {
+      toast.error('Formato de arquivo inválido. Por favor, escolha uma imagem JPEG ou PNG.');
+      return;
+    }
+    setPatientImage(image.dataURL as string);
+    updatePatientImage(image);
+  };
+
+  const handleImageRemove = async (e: { stopPropagation: () => void; }) => {
+    e.stopPropagation();
+    setPatientImage('');
+    updatePatientImage(null);
+  };
+
   useEffect(() => {
     if (formik.values.dateOfBirth) {
       setDateOfBirth(new Date(formik.values.dateOfBirth));
     }
   }, [formik.values.dateOfBirth]);
 
+  useEffect(() => {
+    if (currentPatient?.picture) {
+      setPatientImage(currentPatient?.picture?.base64);
+    }
+  }, []);
+
   return (
     <div>
-      <img src={userImg} alt="Imagem do Usuário" />
+      <ReactImageUploading
+        multiple={false}
+        value={[{ dataURL: patientImage }]}
+        onChange={handleImageUpload}
+      >
+        {({
+          onImageUpload,
+          dragProps,
+        }) => (
+          <div style={{ position: 'relative' }}>
+            <UploadButton
+              onClick={onImageUpload}
+              {...dragProps}
+              type="button"
+            >
+              <PatientImage src={patientImage || userImg} alt="Imagem do Usuário" />
+
+            </UploadButton>
+            {patientImage && (
+            <RemoveImageButton
+              aria-label="Apagar imagem"
+              onClick={handleImageRemove}
+            >
+              <Trash size={21} color="#565656" weight="bold" />
+            </RemoveImageButton>
+            )}
+          </div>
+        )}
+
+      </ReactImageUploading>
       <Form onSubmit={onSubmit}>
         <div>
           <label>
