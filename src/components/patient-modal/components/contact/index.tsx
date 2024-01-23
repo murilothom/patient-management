@@ -7,9 +7,9 @@ import toast from 'react-hot-toast';
 import { Form, Input } from './styles';
 import cepService from '../../../../services/cep-service';
 import { PatientsContext } from '../../../../contexts/patients-context';
-import { useMask } from '../../../../hooks/useMask';
-import { ErrorMessage } from '../ErrorMessage';
-import { PatientSchema } from '../../../../lib/formik/Patient/validation-schema';
+import { useMask } from '../../../../hooks/use-mask';
+import { ErrorMessage } from '../error-message';
+import { PatientSchema } from '../../../../lib/formik/patient/validation-schema';
 
 export function Contact() {
   const {

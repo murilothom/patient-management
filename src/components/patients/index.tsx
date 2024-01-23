@@ -6,11 +6,11 @@ import {
   PatientsContainer,
   PatientsHeader,
 } from './styles';
-import { SearchField } from './components/SearchFIeld';
-import { PatientsTable } from './components/PatientsTable';
-import { DeletePatientModal } from '../DeletePatientModal';
+import { SearchField } from './components/search-field';
+import { PatientsTable } from './components/patients-table';
+import { DeletePatientModal } from '../delete-patient-modal';
 import { PatientsContext } from '../../contexts/patients-context';
-import { PatientModal } from '../PatientModal';
+import { PatientModal } from '../patient-modal';
 import { ModalContext } from '../../contexts/modal-context';
 
 export function Patients() {

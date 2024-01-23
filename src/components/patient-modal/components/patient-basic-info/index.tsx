@@ -21,9 +21,9 @@ import {
 import userImg from '../../../../assets/image-user.png';
 import { PatientsContext } from '../../../../contexts/patients-context';
 import 'react-datepicker/dist/react-datepicker.css';
-import { useMask } from '../../../../hooks/useMask';
-import { ErrorMessage } from '../ErrorMessage';
-import { PatientSchema } from '../../../../lib/formik/Patient/validation-schema';
+import { useMask } from '../../../../hooks/use-mask';
+import { ErrorMessage } from '../error-message';
+import { PatientSchema } from '../../../../lib/formik/patient/validation-schema';
 
 registerLocale('ptBR', ptBR);
 

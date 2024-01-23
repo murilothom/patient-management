@@ -2,7 +2,7 @@ import { ThemeProvider } from 'styled-components';
 import { Toaster } from 'react-hot-toast';
 import { defaultTheme } from './styles/themes/default';
 import { GlobalStyle } from './styles/global';
-import { Home } from './pages/Home';
+import { Home } from './pages/home';
 import { ModalProvider } from './contexts/modal-context';
 import { PatientsProvider } from './contexts/patients-context';
 

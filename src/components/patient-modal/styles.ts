@@ -24,6 +24,11 @@ export const DialogPanel = styled(Dialog.Panel)`
   padding: 2rem 1.25rem;
   border-radius: 10px;
   position: relative;
+
+  /* @media (max-width: 1000px) {
+    width: 100%;
+    height: 100%;
+  } */
 `;
 
 export const NavBar = styled.nav`

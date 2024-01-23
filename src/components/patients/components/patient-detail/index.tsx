@@ -5,7 +5,7 @@ import { Patient } from '../../../../types/patient';
 import { ActionsButtonsWrapper, PatientInfo } from './styles';
 import { ModalContext } from '../../../../contexts/modal-context';
 import { PatientsContext } from '../../../../contexts/patients-context';
-import { useMask } from '../../../../hooks/useMask';
+import { useMask } from '../../../../hooks/use-mask';
 import { dateFormatter } from '../../../../utils/formatters/date-formatter';
 
 interface Props {

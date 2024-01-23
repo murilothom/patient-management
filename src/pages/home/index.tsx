@@ -1,5 +1,5 @@
 import gestaoDSImg from '../../assets/logo-gestao-ds.png';
-import { Patients } from '../../components/Patients';
+import { Patients } from '../../components/patients';
 import { HomeContainer } from './styles';
 
 export function Home() {

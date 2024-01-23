@@ -3,7 +3,7 @@ import { useContextSelector } from 'use-context-selector';
 import { Patient } from '../../../../types/patient';
 import { PatientsTableContainer, TableHead } from './styles';
 import { PatientsContext } from '../../../../contexts/patients-context';
-import { PatientDetail } from '../Patient';
+import { PatientDetail } from '../patient-detail';
 
 interface Props {
   patients: Patient[]

@@ -21,6 +21,11 @@ export const DialogPanel = styled(Dialog.Panel)`
   width: 32.3125rem;
   height: 26.125rem;
   background-color: ${({ theme }) => theme.white};
+
+  /* @media (max-width: 1000px) {
+    width: 100%;
+    height: 100%;
+  } */
 `;
 
 export const Header = styled.header`
