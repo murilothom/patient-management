@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { DotsThree } from 'phosphor-react';
 import { useContextSelector } from 'use-context-selector';
 import { Patient } from '../../../../types/patient';
@@ -23,18 +23,35 @@ export function PatientDetail({ patient }: Props) {
     (context) => context.setCurrentPatient,
   );
   const { maskedValue: maskedDocument } = useMask('cpf', patient.document);
+  const actionsWrapperRef = useRef<HTMLDivElement>(null);
 
   const openDeleteModal = () => {
     setCurrentPatient(patient);
-    setIsActionsOpen(false);
     handleOpenDeleteModal();
+    setIsActionsOpen(false);
   };
 
   const openPatientModal = () => {
     setCurrentPatient(patient);
-    setIsActionsOpen(false);
     handleOpenPatientModal();
+    setIsActionsOpen(false);
   };
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        actionsWrapperRef.current && !actionsWrapperRef.current.contains(event.target as Element)
+      ) {
+        setIsActionsOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [actionsWrapperRef]);
 
   return (
     <tr>
@@ -63,7 +80,7 @@ export function PatientDetail({ patient }: Props) {
           />
         </button>
         {isActionsOpen ? (
-          <ActionsButtonsWrapper>
+          <ActionsButtonsWrapper ref={actionsWrapperRef}>
             <button
               type="button"
               onClick={openPatientModal}
