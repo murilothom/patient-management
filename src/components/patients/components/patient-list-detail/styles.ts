@@ -47,8 +47,8 @@ export const InfoContent = styled.div`
 `;
 
 export const PatientImage = styled.img`
-  width: 3rem;
-  height: 3rem;
+  width: 2.5rem;
+  height: 2.5rem;
   max-width: 100%;
   border-radius: 50%;
   object-fit: contain;

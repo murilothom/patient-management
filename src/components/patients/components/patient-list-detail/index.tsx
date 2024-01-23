@@ -67,7 +67,7 @@ export function PatientListDetail({ patient }: Props) {
           <span>{patient.name}</span>
         </InfoContent>
       </InfoWrapper>
-      <InfoWrapper style={{ marginLeft: '3.5rem', gap: '1.5rem' }}>
+      <InfoWrapper style={{ marginLeft: '3rem', gap: '1.5rem' }}>
         <InfoContent>
           <strong>Data de nascimento:</strong>
           <span>{dateFormatter.format(new Date(patient.dateOfBirth))}</span>
