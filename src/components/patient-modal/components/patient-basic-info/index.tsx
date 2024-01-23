@@ -73,7 +73,7 @@ export function PatientBasicInfo({ handleChangeStep, updatePatientImage }: Props
 
   const handleImageUpload = async (value: ImageListType) => {
     const [image] = value;
-    if (image?.file && image.file.size > 100000) {
+    if (image?.file && image.file.size > 500000) {
       toast.error('A imagem excedeu o tamanho máximo permitido (100 KB). Por favor, escolha uma imagem menor.');
       return;
     }
