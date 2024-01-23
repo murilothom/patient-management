@@ -12,6 +12,7 @@ export const getInitialValues = (patient: Patient | null): PatientSchema => ({
   maritalStatus: patient?.maritalStatus ?? '',
   dateOfBirth: patient?.dateOfBirth ?? new Date(),
   nationality: patient?.nationality ?? '',
+  additionalObservations: patient?.additionalObservations ?? '',
   contact: {
     address: patient?.contact.address ?? '',
     city: patient?.contact.city ?? '',
