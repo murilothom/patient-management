@@ -5,7 +5,7 @@ export const PatientInfo = styled.td`
   color: ${({ theme }) => theme['gray-700']};
   font-size: 0.875rem;
 
-  & > button {
+  & > button[aria-label="open-action-buttons"] {
     background-color: transparent;
     cursor: pointer;
     line-height: 0;
@@ -46,7 +46,6 @@ export const ActionsButtonsWrapper = styled.div`
     width: 100%;
     text-align: left;
     padding: 0.625rem 1rem;
-    border: none;
     z-index: 1;
     border: 1px solid ${({ theme }) => theme['gray-200']};
 

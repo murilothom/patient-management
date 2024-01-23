@@ -1,17 +1,13 @@
 import { ArrowsDownUp } from 'phosphor-react';
 import { useContextSelector } from 'use-context-selector';
-import { Patient } from '../../../../types/patient';
 import { PatientsTableContainer, TableHead } from './styles';
 import { PatientsContext } from '../../../../contexts/patients-context';
-import { PatientDetail } from '../patient-detail';
+import { PatientTableDetail } from '../patient-table-detail';
 
-interface Props {
-  patients: Patient[]
-}
-
-export function PatientsTable({ patients }: Props) {
+export function PatientsTable() {
   const {
     handleParams,
+    patients,
   } = useContextSelector(
     PatientsContext,
     (context) => context,
@@ -59,7 +55,7 @@ export function PatientsTable({ patients }: Props) {
 
       <tbody>
         {patients.map((patient) => (
-          <PatientDetail key={patient._id} patient={patient} />
+          <PatientTableDetail key={patient._id} patient={patient} />
         ))}
       </tbody>
     </PatientsTableContainer>

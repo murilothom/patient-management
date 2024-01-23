@@ -12,6 +12,8 @@ import { DeletePatientModal } from '../delete-patient-modal';
 import { PatientsContext } from '../../contexts/patients-context';
 import { PatientModal } from '../patient-modal';
 import { ModalContext } from '../../contexts/modal-context';
+import { useMediaQuery } from '../../hooks/use-media-query';
+import { PatientList } from './components/patient-list';
 
 export function Patients() {
   const {
@@ -19,6 +21,8 @@ export function Patients() {
     isFetchingPatients,
     setCurrentPatient,
   } = useContextSelector(PatientsContext, (context) => context);
+
+  const isMobileDevice = useMediaQuery('(max-width: 1000px)');
 
   const { handleOpenPatientModal } = useContextSelector(
     ModalContext,
@@ -47,7 +51,13 @@ export function Patients() {
         </ButtonsWrapper>
       </PatientsHeader>
 
-      {patients.length ? <PatientsTable patients={patients} /> : null}
+      {!!patients.length && !isMobileDevice && (
+        <PatientsTable />
+      )}
+
+      {!!patients.length && isMobileDevice && (
+        <PatientList />
+      )}
 
       <DeletePatientModal />
       <PatientModal />

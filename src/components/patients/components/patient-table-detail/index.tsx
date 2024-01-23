@@ -12,7 +12,7 @@ interface Props {
   patient: Patient
 }
 
-export function PatientDetail({ patient }: Props) {
+export function PatientTableDetail({ patient }: Props) {
   const [isActionsOpen, setIsActionsOpen] = useState(false);
   const { handleOpenDeleteModal, handleOpenPatientModal } = useContextSelector(
     ModalContext,
@@ -40,14 +40,15 @@ export function PatientDetail({ patient }: Props) {
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
-        actionsWrapperRef.current && !actionsWrapperRef.current.contains(event.target as Element)
+        actionsWrapperRef.current
+        && !actionsWrapperRef.current.contains(event.target as Element)
+        && isActionsOpen
       ) {
         setIsActionsOpen(false);
       }
     };
 
     document.addEventListener('mousedown', handleClickOutside);
-
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
@@ -79,7 +80,7 @@ export function PatientDetail({ patient }: Props) {
             onClick={() => setIsActionsOpen(!isActionsOpen)}
           />
         </button>
-        {isActionsOpen ? (
+        {isActionsOpen && (
           <ActionsButtonsWrapper ref={actionsWrapperRef}>
             <button
               type="button"
@@ -94,7 +95,7 @@ export function PatientDetail({ patient }: Props) {
               Excluir
             </button>
           </ActionsButtonsWrapper>
-        ) : null}
+        )}
       </PatientInfo>
     </tr>
   );

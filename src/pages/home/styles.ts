@@ -6,4 +6,8 @@ export const HomeContainer = styled.main`
   justify-content: center;
   align-items: center;
   gap: 0.75rem;
+
+  @media(max-width: 720px) {
+    padding: 0 1rem;
+  }
 `;

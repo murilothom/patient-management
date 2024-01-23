@@ -19,13 +19,13 @@ export const DialogWrapper = styled.div`
 
 export const DialogPanel = styled(Dialog.Panel)`
   width: 32.3125rem;
-  height: 26.125rem;
   background-color: ${({ theme }) => theme.white};
 
-  /* @media (max-width: 1000px) {
+  @media (max-width: 720px) {
     width: 100%;
-    height: 100%;
-  } */
+    margin: 0 0.75rem;
+    border-radius: 4px;
+  }
 `;
 
 export const Header = styled.header`
@@ -65,6 +65,10 @@ export const Content = styled.div`
   gap: 1rem;
   padding: 1.5rem 0;
 
+  @media (max-width: 720px) {
+    padding: 1rem 0;
+  }
+
   & > div {
     display: flex;
     flex-direction: column;
@@ -72,6 +76,11 @@ export const Content = styled.div`
     align-items: center;
     gap: 1rem;
     padding: 1rem;
+
+    @media (max-width: 720px) {
+      gap: 0.75rem;
+      padding: 0.5rem 1rem;
+    }
 
     & > h4 {
       font-weight: 600;
