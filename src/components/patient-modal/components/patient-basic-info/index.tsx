@@ -223,7 +223,7 @@ export function PatientBasicInfo({ handleChangeStep, updatePatientImage }: Props
               placeholder="Digite"
               value={formik.values.rg}
               onBlur={formik.handleBlur}
-              onChange={formik.handleChange}
+              onChange={(e) => formik.setFieldValue('document', e.target.value.replace(/\D/g, ''))}
               $error={!!formik.touched?.rg && !!formik.errors?.rg}
             />
             {formik.touched?.rg && formik.errors?.rg && (
