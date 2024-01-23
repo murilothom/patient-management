@@ -42,7 +42,6 @@ export function PatientTableDetail({ patient }: Props) {
       if (
         actionsWrapperRef.current
         && !actionsWrapperRef.current.contains(event.target as Element)
-        && isActionsOpen
       ) {
         setIsActionsOpen(false);
       }

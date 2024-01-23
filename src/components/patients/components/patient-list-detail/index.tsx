@@ -41,11 +41,10 @@ export function PatientListDetail({ patient }: Props) {
   };
 
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
+    const handleClickOutside = (event: MouseEvent | TouchEvent) => {
       if (
         actionsWrapperRef.current
         && !actionsWrapperRef.current.contains(event.target as Element)
-        && isActionsOpen
       ) {
         setIsActionsOpen(false);
       }
