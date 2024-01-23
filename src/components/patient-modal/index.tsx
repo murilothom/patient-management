@@ -20,6 +20,7 @@ import patientsService from '../../services/patients-service';
 import { PatientSchema, patientSchema } from '../../lib/formik/patient/validation-schema';
 import { Contact } from './components/contact';
 import { getInitialValues } from '../../lib/formik/patient/initial-values';
+import { useMediaQuery } from '../../hooks/use-media-query';
 
 enum Step {
   INFO = 1,
@@ -29,6 +30,7 @@ enum Step {
 export function PatientModal() {
   const [step, setStep] = useState<Step>(Step.INFO);
   const [image, setImage] = useState<ImageType | null>(null);
+  const isMobileDevice = useMediaQuery('(max-width: 720px)');
 
   const handleChangeStep = (nextStep: Step) => {
     setStep(nextStep);
@@ -89,14 +91,20 @@ export function PatientModal() {
   };
 
   return (
-    <DialogContainer open={isPatientModalOpen} onClose={() => {}}>
+    <DialogContainer
+      visible={isPatientModalOpen}
+      unstyled
+      onHide={onClose}
+      modal
+      blockScroll={!isMobileDevice || step === Step.CONTACT}
+    >
       <Formik
         initialValues={getInitialValues(currentPatient)}
         onSubmit={onSubmit}
         validationSchema={patientSchema}
       >
         <DialogWrapper>
-          <DialogPanel>
+          <DialogPanel $blockScroll={!isMobileDevice || step === Step.CONTACT}>
             <CloseButton onClick={onClose}>
               <X size={24} weight="bold" color="#656565" />
             </CloseButton>

@@ -1,5 +1,5 @@
+import { Dialog } from 'primereact/dialog';
 import { styled } from 'styled-components';
-import { Dialog } from '@headlessui/react';
 
 export const DialogContainer = styled(Dialog)`
   position: relative;
@@ -17,7 +17,7 @@ export const DialogWrapper = styled.div`
   background-color: #00000075;
 `;
 
-export const DialogPanel = styled(Dialog.Panel)`
+export const DialogPanel = styled.div`
   width: 32.3125rem;
   background-color: ${({ theme }) => theme.white};
 
@@ -35,7 +35,7 @@ export const Header = styled.header`
   padding: 1rem;
 `;
 
-export const Title = styled(Dialog.Title)`
+export const Title = styled.h2`
   font-size: 1.5rem;
   color: ${({ theme }) => theme.purple};
   font-weight: 600;

@@ -77,6 +77,7 @@ export const ButtonWrapper = styled.footer`
   @media (max-width: 1000px) {
     margin-top: 0.5rem;
     width: 100%;
+    margin-bottom: 1.75rem;
   }
 
   button[type="submit"] {

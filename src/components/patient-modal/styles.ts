@@ -1,9 +1,17 @@
 import { css, styled } from 'styled-components';
-import { Dialog } from '@headlessui/react';
+import { Dialog, DialogProps } from 'primereact/dialog';
 
-export const DialogContainer = styled(Dialog)`
+export const DialogContainer = styled(Dialog)<DialogProps>`
   position: relative;
   z-index: 50;
+
+  & > div {
+    ${({ blockScroll }) => blockScroll
+      && css`
+        overflow-y: hidden;
+      `
+}
+  }
 `;
 
 export const DialogWrapper = styled.div`
@@ -15,9 +23,18 @@ export const DialogWrapper = styled.div`
   width: 100vw;
   height: 100vh;
   background-color: #00000075;
+
+  @media (max-width: 1000px) {
+    overflow-y: scroll;
+    background-color: ${({ theme }) => theme.white};
+  }
 `;
 
-export const DialogPanel = styled(Dialog.Panel)`
+interface DialogPanelProps {
+  $blockScroll: boolean
+}
+
+export const DialogPanel = styled.div<DialogPanelProps>`
   width: 49.5rem;
   height: 44.1875rem;
   background-color: ${({ theme }) => theme.white};
@@ -29,6 +46,12 @@ export const DialogPanel = styled(Dialog.Panel)`
     width: 100%;
     height: 100%;
     padding: 1.25rem;
+
+    ${({ $blockScroll }) => $blockScroll
+      && css`
+        overflow-y: hidden;
+      `
+}
   }
 `;
 
