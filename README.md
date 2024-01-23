@@ -1,30 +1,60 @@
-# React + TypeScript + Vite
+# Gestão de Pacientes
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Projeto criado com o objetivo de ser robusto e escalável, utilizei grande parte do meu conhecimento que adquiri ao longo de meus estudos e trabalho e mesmo assim consegui aprender muito ao longo da finalização do projeto.
 
-Currently, two official plugins are available:
+## Como utilizar
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Instale as dependências
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+```bash
+$ npm install
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+Para rodar a aplicação
+
+```bash
+$ npm run dev
+```
+
+Por padrão estará sendo executado na porta `5173`
+
+## Tecnologias utilizadas
+
+### React + Typescript + Vite
+Projeto criado com Vite tendo um ótimo desempenho em desenvolvimento (e em produção)
+
+### Styled-Components
+Utilizado com o objetivo de facilitar e aumentar as possibilidades de estilização de forma simples com o uso de CSS-in-JS
+
+### Formik + Yup
+Optei pelo Formik e Yup para lidar com formulários por eu ter mais familiaridade
+
+### Phosphor-React
+Para utilização de ícones SVG
+
+### PrimeReact
+Utilizado os componentes Dialog e Dropdown
+
+### React Hot Toast
+Para notificações de erro e sucesso
+
+### React Images Uploading
+Utilizado o componente de upload de imagens para os pacientes
+
+## Importante
+
+Caso esteja utilizando a API criada para o projeto, vá no arquivo `src/services/patients-service.ts` e mude:
+
+```js
+const baseURL = 'https://patient-management-api-5mh6.onrender.com/patient'; /* URL Caso API NÃO estiver sendo executada localmente */
+// const baseURL = 'http://localhost:3000/patient'; /* URL Caso API estiver sendo executada localmente */
+```
+
+para:
+
+```js
+// const baseURL = 'https://patient-management-api-5mh6.onrender.com/patient'; /* URL Caso API NÃO estiver sendo executada localmente */
+const baseURL = 'http://localhost:3000/patient'; /* URL Caso API estiver sendo executada localmente */
+```
+
+E se não estiver utilizando a API localmente, basta acessar <a href="https://github.com/murilothom/patient-management-api" target="_blank">Patient Management Api</a> e seguir os passos para a instalação
