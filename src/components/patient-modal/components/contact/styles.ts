@@ -10,6 +10,10 @@ export const Form = styled.form`
     column-gap: 1.85375rem;
     row-gap: 0.875rem;
 
+    @media (max-width: 1000px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
     label {
       display: flex;
       flex-direction: column;
@@ -18,6 +22,10 @@ export const Form = styled.form`
       font-size: 0.875rem;
       width: 14.35375rem;
       position: relative;
+
+      @media (max-width: 1000px) {
+        width: 100%;
+      }
     }
 
     input {
@@ -40,6 +48,12 @@ export const Form = styled.form`
     justify-content: flex-end;
     align-items: flex-end;
 
+    @media (max-width: 1000px) {
+      height: auto;
+      margin-top: 1.5rem;
+      width: 100%;
+    }
+
     button[type="submit"] {
       background-color: ${({ theme }) => theme.blue};
       color:  ${({ theme }) => theme.white};
@@ -50,6 +64,10 @@ export const Form = styled.form`
       font-size: 0.875rem;
       font-weight: 600;
       border-radius: 4px;
+
+      @media (max-width: 1000px) {
+        width: 100%;
+      }
 
       &:hover {
         filter: brightness(0.95);

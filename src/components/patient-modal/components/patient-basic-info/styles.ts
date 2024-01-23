@@ -15,6 +15,11 @@ export const Form = styled.form`
     grid-template-columns: repeat(3, 1fr);
     column-gap: 1.85375rem;
     row-gap: 0.875rem;
+
+    @media (max-width: 1000px) {
+      width: 100%;
+      grid-template-columns: repeat(2, 1fr);
+    }
   }
 
   label {
@@ -25,6 +30,10 @@ export const Form = styled.form`
     font-size: 0.875rem;
     width: 14.35375rem;
     position: relative;
+
+    @media (max-width: 1000px) {
+      width: 100%;
+    }
   }
 
   input, textarea {
@@ -65,6 +74,11 @@ export const ButtonWrapper = styled.footer`
   align-items: flex-end;
   margin-top: 2.4375rem;
 
+  @media (max-width: 1000px) {
+    margin-top: 0.5rem;
+    width: 100%;
+  }
+
   button[type="submit"] {
     background-color: ${({ theme }) => theme.blue};
     color:  ${({ theme }) => theme.white};
@@ -75,6 +89,10 @@ export const ButtonWrapper = styled.footer`
     font-size: 0.875rem;
     font-weight: 600;
     border-radius: 4px;
+
+    @media (max-width: 1000px) {
+      width: 100%;
+    }
 
     &:hover {
       filter: brightness(0.95);

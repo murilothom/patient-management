@@ -25,10 +25,11 @@ export const DialogPanel = styled(Dialog.Panel)`
   border-radius: 10px;
   position: relative;
 
-  /* @media (max-width: 1000px) {
+  @media (max-width: 1000px) {
     width: 100%;
     height: 100%;
-  } */
+    padding: 1.25rem;
+  }
 `;
 
 export const NavBar = styled.nav`
