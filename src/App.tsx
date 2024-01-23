@@ -9,7 +9,7 @@ import { PatientsProvider } from './contexts/patients-context';
 function App() {
   return (
     <ThemeProvider theme={defaultTheme}>
-      <Toaster position="top-right" />
+      <Toaster position="top-right" toastOptions={{ duration: 3500 }} />
 
       <PatientsProvider>
         <ModalProvider>
