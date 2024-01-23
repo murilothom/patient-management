@@ -32,7 +32,7 @@ export class PatientsService {
 
   public uploadImage = (id: string, file: File): Promise<void> => {
     const formData = new FormData();
-    // formData.append('file', file);
+    formData.append('file', file);
     return this.service.patch(`${baseURL}/${id}/picture`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
